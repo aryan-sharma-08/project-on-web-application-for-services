@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Order — R.K. Studio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <nav>
+        <div class="nav-brand">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="R.K. Studio Logo" class="nav-logo">
+        </div>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/wedding">Wedding & Events</a></li>
+            <li><a href="/printing">Printing Services</a></li>
+            <li><a href="/gallery">Gallery</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1>🛒 Place Your Order</h1>
+        <p>You are ordering: <strong>{{ service }}</strong></p>
+    </header>
+
+    <main>
+        <div class="order-wrapper">
+
+            {% if success %}
+            <!-- Success Message -->
+            <div class="order-success">
+                <div class="success-icon">🎉</div>
+                <h2>Order Placed Successfully!</h2>
+                <p>Thank you for choosing <strong>R.K. Studio</strong>! We have received your order for <strong>{{ service }}</strong>.</p>
+                <p>Our team will contact you soon on your provided phone number to confirm the order details and discuss further requirements.</p>
+                <p class="success-note">📞 Expected call within <strong>24 hours</strong>.</p>
+                <a href="/printing" class="btn">← Back to Printing Services</a>
+            </div>
+
+            {% else %}
+            <!-- Order Form -->
+            <div class="order-form">
+                <h2>Fill Order Details</h2>
+                <p class="order-subtitle">Service: <span class="service-tag">{{ service }}</span></p>
+
+                <form action="/order" method="POST">
+                    <input type="hidden" name="service" value="{{ service }}">
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>👤 Full Name</label>
+                            <input type="text" name="name" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>📞 Phone Number</label>
+                            <input type="text" name="phone" placeholder="Enter your phone number" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>🔢 Quantity</label>
+                            <input type="number" name="quantity" placeholder="e.g. 100" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label>📐 Size</label>
+                            <input type="text" name="size" placeholder="e.g. A4, 3.5x2 inch, Custom">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>🎨 Design Details</label>
+                        <textarea name="design" rows="3" placeholder="Describe your design — colors, text, logo, layout etc."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>🏠 Delivery Address</label>
+                        <textarea name="address" rows="2" placeholder="Enter your full delivery address" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>📝 Special Instructions</label>
+                        <textarea name="instructions" rows="2" placeholder="Any special instructions or requirements..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Place Order 🛒</button>
+                </form>
+            </div>
+            {% endif %}
+
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 R.K. Studio. All rights reserved.</p>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/918000583737" target="_blank" class="whatsapp-float">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+    </a>
+
+</body>
+</html>

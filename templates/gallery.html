@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery — R.K. Studio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <nav>
+        <div class="nav-brand">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="R.K. Studio Logo" class="nav-logo">
+        </div>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/wedding">Wedding & Events</a></li>
+            <li><a href="/printing">Printing Services</a></li>
+            <li><a href="/gallery">Gallery</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1>📸 Our Gallery</h1>
+        <p>A glimpse of our finest work at R.K. Studio</p>
+    </header>
+
+    <main>
+        <div class="gallery-wrapper">
+
+            <!-- Filter Buttons -->
+            <div class="gallery-filters">
+                <button class="filter-btn active" onclick="filterGallery('all')">All</button>
+                <button class="filter-btn" onclick="filterGallery('wedding')">Wedding</button>
+                <button class="filter-btn" onclick="filterGallery('events')">Events</button>
+                <button class="filter-btn" onclick="filterGallery('printing')">Printing</button>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="gallery-grid">
+
+                <div class="gallery-item wedding" onclick="openLightbox(this)">
+                    <img src="https://picsum.photos/seed/wedding1/600/400" alt="Wedding Photography">
+                    <div class="gallery-overlay">
+                        <p>💍 Wedding Photography</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item wedding" onclick="openLightbox(this)">
+                    <img src="https://picsum.photos/seed/wedding2/600/400" alt="Wedding Videography">
+                    <div class="gallery-overlay">
+                        <p>🎥 Wedding Videography</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item wedding" onclick="openLightbox(this)">
+                    <img src="https://picsum.photos/seed/wedding3/600/400" alt="Drone Coverage">
+                    <div class="gallery-overlay">
+                        <p>🚁 Drone Coverage</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item events" onclick="openLightbox(this)">
+                    <img src="https://picsum.photos/seed/event1/600/400" alt="Corporate Event">
+                    <div class="gallery-overlay">
+                        <p>🏢 Corporate Event</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item events" onclick="openLightbox(this)">
+                    <img src="https://picsum.photos/seed/event2/600/400" alt="Live Event Production">
+                    <div class="gallery-overlay">
+                        <p>🎙️ Live Event Production</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item events" onclick="openLightbox(this)">
+                    <img src="https://picsum.photos/seed/event3/600/400" alt="LED Wall">
+                    <div class="gallery-overlay">
+                        <p>📺 LED Wall Setup</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item printing" onclick="openLightbox(this)">
+                    <img src="https://picsum.photos/seed/print1/600/400" alt="ID Card Printing">
+                    <div class="gallery-overlay">
+                        <p>🪪 ID Card Printing</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item printing" onclick="openLightbox(this)">
+                    <img src="https://picsum.photos/seed/print2/600/400" alt="Banner Printing">
+                    <div class="gallery-overlay">
+                        <p>🖼️ Banner Printing</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item printing" onclick="openLightbox(this)">
+                    <img src="https://picsum.photos/seed/print3/600/400" alt="Visiting Cards">
+                    <div class="gallery-overlay">
+                        <p>📇 Visiting Cards</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">✕</span>
+        <img id="lightbox-img" src="" alt="Full Image">
+        <p id="lightbox-caption"></p>
+    </div>
+
+    <footer>
+        <p>© 2025 R.K. Studio. All rights reserved.</p>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/918000583737" target="_blank" class="whatsapp-float">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+    </a>
+
+    <script>
+        // Filter Gallery
+        function filterGallery(category) {
+            const items = document.querySelectorAll('.gallery-item');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            items.forEach(item => {
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Lightbox
+        function openLightbox(element) {
+            const img = element.querySelector('img');
+            const caption = element.querySelector('.gallery-overlay p');
+            document.getElementById('lightbox-img').src = img.src;
+            document.getElementById('lightbox-caption').textContent = caption.textContent;
+            document.getElementById('lightbox').style.display = 'flex';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>

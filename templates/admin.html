@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin — R.K. Studio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <nav>
+        <div class="nav-brand">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="R.K. Studio Logo" class="nav-logo">
+        </div>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/wedding">Wedding & Events</a></li>
+            <li><a href="/printing">Printing Services</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+            <li><a href="/gallery">Gallery</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1>🔐 Admin Panel</h1>
+        <p>View all customer messages</p>
+    </header>
+
+    <main>
+        <div class="admin-wrapper">
+
+            {% if not logged_in %}
+            <!-- Login Form -->
+            <div class="admin-login">
+                <h2>Enter Password</h2>
+                {% if error %}
+                <div class="error-message">❌ Wrong password! Please try again.</div>
+                {% endif %}
+                <form action="/admin" method="POST">
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" name="password" placeholder="Enter admin password" required>
+                    </div>
+                    <button type="submit" class="btn-submit">Login 🔐</button>
+                </form>
+            </div>
+
+            {% else %}
+            <!-- Messages Table -->
+            <div class="admin-messages">
+                <h2>📨 Customer Messages ({{ messages|length }})</h2>
+
+                {% if messages|length == 0 %}
+                <p class="no-messages">No messages yet!</p>
+                {% else %}
+                <table class="messages-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Date & Time</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Service</th>
+                            <th>Message</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for msg in messages %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ msg.time }}</td>
+                            <td>{{ msg.name }}</td>
+                            <td>{{ msg.phone }}</td>
+                            <td>{{ msg.email }}</td>
+                            <td><span class="service-badge">{{ msg.service }}</span></td>
+                            <td>{{ msg.message }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
+
+            </div>
+            <!-- Orders Table -->
+            <div class="admin-messages" style="margin-top: 50px;">
+                <h2>🛒 Customer Orders ({{ orders|length }})</h2>
+
+                {% if orders|length == 0 %}
+                <p class="no-messages">No orders yet!</p>
+                {% else %}
+                <table class="messages-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Date & Time</th>
+                            <th>Service</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Quantity</th>
+                            <th>Size</th>
+                            <th>Design</th>
+                            <th>Address</th>
+                            <th>Instructions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ order.time }}</td>
+                            <td><span class="service-badge">{{ order.service }}</span></td>
+                            <td>{{ order.name }}</td>
+                            <td>{{ order.phone }}</td>
+                            <td>{{ order.quantity }}</td>
+                            <td>{{ order.size }}</td>
+                            <td>{{ order.design }}</td>
+                            <td>{{ order.address }}</td>
+                            <td>{{ order.instructions }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
+            </div>
+
+            <!-- Bookings Table -->
+            <div class="admin-messages" style="margin-top: 50px;">
+                <h2>🎬 Event Bookings ({{ bookings|length }})</h2>
+
+                {% if bookings|length == 0 %}
+                <p class="no-messages">No bookings yet!</p>
+                {% else %}
+                <table class="messages-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Date & Time</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Package</th>
+                            <th>Add-ons</th>
+                            <th>Custom</th>
+                            <th>Event Date</th>
+                            <th>Event Type</th>
+                            <th>Venue</th>
+                            <th>Guests</th>
+                            <th>Requirements</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for booking in bookings %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ booking.time }}</td>
+                            <td>{{ booking.name }}</td>
+                            <td>{{ booking.phone }}</td>
+                            <td><span class="service-badge">{{ booking.package }}</span></td>
+                            <td>{{ booking.addons }}</td>
+                            <td>{{ booking.custom }}</td>
+                            <td>{{ booking.event_date }}</td>
+                            <td>{{ booking.event_type }}</td>
+                            <td>{{ booking.venue }}</td>
+                            <td>{{ booking.guests }}</td>
+                            <td>{{ booking.requirements }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
+            </div>
+
+            {% endif %}
+
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 R.K. Studio. All rights reserved.</p>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/918000583737" target="_blank" class="whatsapp-float">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+    </a>
+
+</body>
+</html>

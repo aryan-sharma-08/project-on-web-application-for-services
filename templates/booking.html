@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Event Services — R.K. Studio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <nav>
+        <div class="nav-brand">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="R.K. Studio Logo" class="nav-logo">
+        </div>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/wedding">Wedding & Events</a></li>
+            <li><a href="/printing">Printing Services</a></li>
+            <li><a href="/gallery">Gallery</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1>🎬 Book Event Services</h1>
+        <p>Choose your services and let R.K. Studio make your event unforgettable</p>
+    </header>
+
+    <main>
+        <div class="booking-wrapper">
+
+            {% if success %}
+            <!-- Success Message -->
+            <div class="order-success">
+                <div class="success-icon">🎉</div>
+                <h2>Booking Request Submitted!</h2>
+                <p>Thank you for choosing <strong>R.K. Studio</strong>! We have received your booking request.</p>
+                <p>Our team will contact you soon on your provided phone number to confirm availability and discuss further details.</p>
+                <p class="success-note">📞 Expected call within <strong>24 hours</strong>.</p>
+                <a href="/wedding" class="btn">← Back to Wedding & Events</a>
+            </div>
+
+            {% else %}
+            <form action="/booking" method="POST" id="bookingForm">
+
+                <!-- STEP 1: Choose Package -->
+                <div class="booking-section">
+                    <div class="step-header">
+                        <span class="step-number">1</span>
+                        <h2>Choose a Package <span class="optional">(Optional)</span></h2>
+                    </div>
+                    <p class="step-desc">Select a ready-made package that suits your event</p>
+
+                    <div class="packages-grid">
+
+                        <div class="package-card" onclick="selectPackage(this, 'Essentials')">
+                            <input type="radio" name="package" value="Essentials" hidden>
+                            <div class="package-icon">🌟</div>
+                            <h3>Essentials</h3>
+                            <ul>
+                                <li>✅ Photography</li>
+                                <li>✅ Videography</li>
+                            </ul>
+                        </div>
+
+                        <div class="package-card" onclick="selectPackage(this, 'Classic')">
+                            <input type="radio" name="package" value="Classic" hidden>
+                            <div class="package-icon">💫</div>
+                            <h3>Classic</h3>
+                            <ul>
+                                <li>✅ Photography</li>
+                                <li>✅ Videography</li>
+                                <li>✅ Drone Coverage</li>
+                                <li>✅ Video Editing</li>
+                            </ul>
+                        </div>
+
+                        <div class="package-card" onclick="selectPackage(this, 'Elite')">
+                            <input type="radio" name="package" value="Elite" hidden>
+                            <div class="package-icon">👑</div>
+                            <h3>Elite</h3>
+                            <ul>
+                                <li>✅ Photography</li>
+                                <li>✅ Videography</li>
+                                <li>✅ Drone Coverage</li>
+                                <li>✅ Crane / Jimmy Jib</li>
+                                <li>✅ LED Wall / Plasma</li>
+                                <li>✅ Live Event Production</li>
+                                <li>✅ Video Editing</li>
+                            </ul>
+                        </div>
+
+                        <div class="package-card" onclick="selectPackage(this, 'Live Coverage')">
+                            <input type="radio" name="package" value="Live Coverage" hidden>
+                            <div class="package-icon">📡</div>
+                            <h3>Live Coverage</h3>
+                            <ul>
+                                <li>✅ Live Streaming</li>
+                                <li>✅ Live Event Production</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- STEP 2: Add-ons -->
+                <div class="booking-section">
+                    <div class="step-header">
+                        <span class="step-number">2</span>
+                        <h2>Add Extra Services <span class="optional">(Optional)</span></h2>
+                    </div>
+                    <p class="step-desc">Add any extra services on top of your package</p>
+
+                    <div class="addons-grid">
+                        <label class="addon-item">
+                            <input type="checkbox" name="addons" value="Crane / Jimmy Jib Camera">
+                            <span class="addon-box">
+                                <span class="addon-icon">🎦</span>
+                                <span>Crane / Jimmy Jib Camera</span>
+                            </span>
+                        </label>
+                        <label class="addon-item">
+                            <input type="checkbox" name="addons" value="LED Wall / Plasma Screen">
+                            <span class="addon-box">
+                                <span class="addon-icon">📺</span>
+                                <span>LED Wall / Plasma Screen</span>
+                            </span>
+                        </label>
+                        <label class="addon-item">
+                            <input type="checkbox" name="addons" value="Live Streaming">
+                            <span class="addon-box">
+                                <span class="addon-icon">📡</span>
+                                <span>Live Streaming</span>
+                            </span>
+                        </label>
+                        <label class="addon-item">
+                            <input type="checkbox" name="addons" value="Corporate Event Coverage">
+                            <span class="addon-box">
+                                <span class="addon-icon">🏢</span>
+                                <span>Corporate Event Coverage</span>
+                            </span>
+                        </label>
+                        <label class="addon-item">
+                            <input type="checkbox" name="addons" value="Wedding Coverage">
+                            <span class="addon-box">
+                                <span class="addon-icon">💍</span>
+                                <span>Wedding Coverage</span>
+                            </span>
+                        </label>
+                        <label class="addon-item">
+                            <input type="checkbox" name="addons" value="Video Editing & Post Production">
+                            <span class="addon-box">
+                                <span class="addon-icon">🎞️</span>
+                                <span>Video Editing & Post Production</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- STEP 3: Custom Selection -->
+                <div class="booking-section">
+                    <div class="step-header">
+                        <span class="step-number">3</span>
+                        <h2>Build Your Own <span class="optional">(Optional)</span></h2>
+                    </div>
+                    <p class="step-desc">Don't see what you need? Select individual services below</p>
+
+                    <div class="addons-grid">
+                        <label class="addon-item">
+                            <input type="checkbox" name="custom" value="Photography">
+                            <span class="addon-box">
+                                <span class="addon-icon">📷</span>
+                                <span>Photography</span>
+                            </span>
+                        </label>
+                        <label class="addon-item">
+                            <input type="checkbox" name="custom" value="Videography">
+                            <span class="addon-box">
+                                <span class="addon-icon">🎥</span>
+                                <span>Videography</span>
+                            </span>
+                        </label>
+                        <label class="addon-item">
+                            <input type="checkbox" name="custom" value="Drone Coverage">
+                            <span class="addon-box">
+                                <span class="addon-icon">🚁</span>
+                                <span>Drone Coverage</span>
+                            </span>
+                        </label>
+                        <label class="addon-item">
+                            <input type="checkbox" name="custom" value="Crane / Jimmy Jib Camera">
+                            <span class="addon-box">
+                                <span class="addon-icon">🎦</span>
+                                <span>Crane / Jimmy Jib Camera</span>
+                            </span>
+                        </label>
+                        <label class="addon-item">
+                            <input type="checkbox" name="custom" value="LED Wall / Plasma Screen">
+                            <span class="addon-box">
+                                <span class="addon-icon">📺</span>
+                                <span>LED Wall / Plasma Screen</span>
+                            </span>
+                        </label>
+                        <label class="addon-item">
+                            <input type="checkbox" name="custom" value="Live Event Production">
+                            <span class="addon-box">
+                                <span class="addon-icon">🎙️</span>
+                                <span>Live Event Production</span>
+                            </span>
+                        </label>
+                        <label class="addon-item">
+                            <input type="checkbox" name="custom" value="Wedding Coverage">
+                            <span class="addon-box">
+                                <span class="addon-icon">💍</span>
+                                <span>Wedding Coverage</span>
+                            </span>
+                        </label>
+                        <label class="addon-item">
+                            <input type="checkbox" name="custom" value="Corporate Event Coverage">
+                            <span class="addon-box">
+                                <span class="addon-icon">🏢</span>
+                                <span>Corporate Event Coverage</span>
+                            </span>
+                        </label>
+                        <label class="addon-item">
+                            <input type="checkbox" name="custom" value="Live Streaming">
+                            <span class="addon-box">
+                                <span class="addon-icon">📡</span>
+                                <span>Live Streaming</span>
+                            </span>
+                        </label>
+                        <label class="addon-item">
+                            <input type="checkbox" name="custom" value="Video Editing & Post Production">
+                            <span class="addon-box">
+                                <span class="addon-icon">🎞️</span>
+                                <span>Video Editing & Post Production</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- STEP 4: Event Details -->
+                <div class="booking-section">
+                    <div class="step-header">
+                        <span class="step-number">4</span>
+                        <h2>Your Event Details</h2>
+                    </div>
+                    <p class="step-desc">Tell us about your event so we can prepare accordingly</p>
+
+                    <div class="booking-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>👤 Full Name</label>
+                                <input type="text" name="name" placeholder="Enter your full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>📞 Phone Number</label>
+                                <input type="text" name="phone" placeholder="Enter your phone number" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>📅 Event Date</label>
+                                <input type="date" name="event_date" required>
+                            </div>
+                            <div class="form-group">
+                                <label>🎉 Event Type</label>
+                                <select name="event_type">
+                                    <option value="">-- Select Event Type --</option>
+                                    <option>Wedding</option>
+                                    <option>Corporate Event</option>
+                                    <option>Birthday Party</option>
+                                    <option>Engagement</option>
+                                    <option>Conference / Seminar</option>
+                                    <option>Concert / Show</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>📍 Event Location / Venue</label>
+                                <input type="text" name="venue" placeholder="Enter event venue or location" required>
+                            </div>
+                            <div class="form-group">
+                                <label>👥 Expected Guests <span class="optional">(Optional)</span></label>
+                                <input type="number" name="guests" placeholder="e.g. 200" min="1">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>📝 Special Requirements</label>
+                            <textarea name="requirements" rows="3" placeholder="Any special requirements or additional information..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-submit">Submit Booking Request 🎬</button>
+                    </div>
+                </div>
+
+            </form>
+            {% endif %}
+
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 R.K. Studio. All rights reserved.</p>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/918000583737" target="_blank" class="whatsapp-float">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+    </a>
+
+    <script>
+        function selectPackage(card, packageName) {
+            // Remove active from all cards
+            document.querySelectorAll('.package-card').forEach(c => c.classList.remove('active'));
+            // Toggle active on clicked card
+            if (card.classList.contains('was-active')) {
+                card.classList.remove('was-active');
+                card.querySelector('input').checked = false;
+            } else {
+                card.classList.add('active');
+                card.classList.add('was-active');
+                card.querySelector('input').checked = true;
+                document.querySelectorAll('.package-card').forEach(c => {
+                    if (c !== card) c.classList.remove('was-active');
+                });
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wedding & Event Services</title>
+    <title>Wedding & Event Services — R.K. Studio</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
     <nav>
-        <div class="nav-brand">✨ R.K. STUDIO</div>
+        <div class="nav-brand">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="R.K. Studio Logo" class="nav-logo">
+        </div>
         <ul class="nav-links">
             <li><a href="/">Home</a></li>
             <li><a href="/wedding">Wedding & Events</a></li>
             <li><a href="/printing">Printing Services</a></li>
+            <li><a href="/gallery">Gallery</a></li>
             <li><a href="/contact">Contact Us</a></li>
         </ul>
     </nav>
@@ -21,77 +24,114 @@
     <header>
         <h1>🎬 Wedding & Event Services</h1>
         <p>Professional coverage for your most precious moments</p>
+        <!-- Book Now button below header -->
+        <a href="/booking" class="btn-book-top">📅 Book Now</a>
     </header>
 
     <main>
+
+        <!-- Quick Book Banner below header -->
+        <div class="quick-book-bar">
+            <span>🎬 Ready to capture your special moment?</span>
+            <a href="/booking" class="btn-quick-book">Book Now →</a>
+        </div>
+
         <div class="services-container">
 
             <div class="service-card">
                 <div class="icon">📷</div>
                 <h2>Photography</h2>
                 <p>Professional photography capturing every special moment beautifully.</p>
+                <a href="/booking" class="btn">Book Now</a>
             </div>
 
             <div class="service-card">
                 <div class="icon">🎥</div>
                 <h2>Videography</h2>
                 <p>High quality video recording of your events and ceremonies.</p>
+                <a href="/booking" class="btn">Book Now</a>
             </div>
 
             <div class="service-card">
                 <div class="icon">🚁</div>
                 <h2>Drone Coverage</h2>
                 <p>Stunning aerial shots and bird's eye view footage of your event.</p>
+                <a href="/booking" class="btn">Book Now</a>
             </div>
 
             <div class="service-card">
                 <div class="icon">🎦</div>
                 <h2>Crane / Jimmy Jib Camera</h2>
                 <p>Cinematic crane shots for dramatic and professional event coverage.</p>
+                <a href="/booking" class="btn">Book Now</a>
             </div>
 
             <div class="service-card">
                 <div class="icon">📺</div>
                 <h2>LED Wall / Plasma Screen</h2>
                 <p>Large LED walls and plasma screens to enhance your event experience.</p>
+                <a href="/booking" class="btn">Book Now</a>
             </div>
 
             <div class="service-card">
                 <div class="icon">🎙️</div>
                 <h2>Live Event Production</h2>
                 <p>Full end-to-end live event production and management services.</p>
+                <a href="/booking" class="btn">Book Now</a>
             </div>
 
             <div class="service-card">
                 <div class="icon">💍</div>
                 <h2>Wedding Coverage</h2>
                 <p>Complete wedding day coverage from start to finish.</p>
+                <a href="/booking" class="btn">Book Now</a>
             </div>
 
             <div class="service-card">
                 <div class="icon">🏢</div>
                 <h2>Corporate Event Coverage</h2>
                 <p>Professional coverage for corporate events, conferences and seminars.</p>
+                <a href="/booking" class="btn">Book Now</a>
             </div>
 
             <div class="service-card">
                 <div class="icon">📡</div>
                 <h2>Live Streaming</h2>
                 <p>Stream your event live to audiences anywhere in the world.</p>
+                <a href="/booking" class="btn">Book Now</a>
             </div>
 
             <div class="service-card">
                 <div class="icon">🎞️</div>
                 <h2>Video Editing & Post Production</h2>
                 <p>Professional editing and post production to perfect your footage.</p>
+                <a href="/booking" class="btn">Book Now</a>
             </div>
 
         </div>
+
+        <!-- Bottom Booking Banner -->
+        <div class="booking-banner">
+            <h2>Ready to Book?</h2>
+            <p>Choose your services, pick a package or build your own — and we'll take care of the rest!</p>
+            <a href="/booking" class="btn">Book Now 🎬</a>
+        </div>
+
     </main>
 
     <footer>
-        <p>© 2025 R.K. STUDIO. All rights reserved.</p>
+        <p>© 2025 R.K. Studio. All rights reserved.</p>
     </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/918000583737" target="_blank" class="whatsapp-float">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+    </a>
+
+    <!-- Floating Book Now Button -->
+    <a href="/booking" class="book-float">
+        📅 Book Now
+    </a>
 
 </body>
 </html>

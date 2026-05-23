@@ -9,12 +9,15 @@
 <body>
 
     <nav>
-        <div class="nav-brand">✨ R.K. STUDIO</div>
+    <div class="nav-brand">
+    <img src="{{ url_for('static', filename='logo.png') }}" alt="R.K. Studio Logo" class="nav-logo">
+</div>
         <ul class="nav-links">
             <li><a href="/">Home</a></li>
             <li><a href="/wedding">Wedding & Events</a></li>
             <li><a href="/printing">Printing Services</a></li>
             <li><a href="/contact">Contact Us</a></li>
+            <li><a href="/gallery">Gallery</a></li>
         </ul>
     </nav>
 
@@ -67,6 +70,11 @@
             <!-- Right Side: Contact Form -->
             <div class="contact-form">
                 <h2>Send a Message</h2>
+                {% if success %}
+                <div class="success-message">
+               ✅ Thank you! Your message has been sent. We will contact you soon!
+                </div>
+                {% endif %}
                 <form action="/contact" method="POST">
                     <div class="form-group">
                         <label>Your Name</label>
@@ -109,6 +117,11 @@
     <footer>
         <p>© 2025 R.K. STUDIO. All rights reserved.</p>
     </footer>
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/918000583737" target="_blank" class="whatsapp-float">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+    </a>
 
+</body>
 </body>
 </html>
