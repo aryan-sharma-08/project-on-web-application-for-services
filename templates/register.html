@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register — R.K. Studio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <nav>
+        <div class="nav-brand">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="R.K. Studio Logo" class="nav-logo">
+        </div>
+        <ul class="nav-links">
+            <li><a href="/" data-en="Home" data-hi="होम">Home</a></li>
+            <li><a href="/wedding" data-en="Wedding & Events" data-hi="शादी और इवेंट">Wedding & Events</a></li>
+            <li><a href="/printing" data-en="Printing Services" data-hi="प्रिंटिंग सेवाएं">Printing Services</a></li>
+            <li><a href="/gallery" data-en="Gallery" data-hi="गैलरी">Gallery</a></li>
+            <li><a href="/contact" data-en="Contact Us" data-hi="संपर्क करें">Contact Us</a></li>
+        </ul>
+        <div class="lang-toggle">
+            <button onclick="setLang('en')" id="btn-en" class="lang-btn active">EN</button>
+            <span>|</span>
+            <button onclick="setLang('hi')" id="btn-hi" class="lang-btn">हिं</button>
+        </div>
+    </nav>
+
+    <header>
+        <h1 data-en="✨ Create Account" data-hi="✨ अकाउंट बनाएं">✨ Create Account</h1>
+        <p data-en="Join R.K. Studio to book services and place orders" data-hi="सेवाएं बुक करने और ऑर्डर देने के लिए आर.के. स्टूडियो से जुड़ें">Join R.K. Studio to book services and place orders</p>
+    </header>
+
+    <main>
+        <div class="auth-wrapper">
+            <div class="auth-card">
+
+                <div class="auth-icon">✨</div>
+                <h2 data-en="Register" data-hi="रजिस्टर">Register</h2>
+
+                {% if error %}
+<div class="error-message">❌ {{ error }}</div>
+{% endif %}
+
+{% if success %}
+<div class="success-message">
+    ✅ Account created! We sent a verification email to <strong>{{ email }}</strong>.
+    Please check your inbox and click the verification link to activate your account!
+</div>
+{% endif %}
+
+                <form action="/register" method="POST">
+                    <div class="form-group">
+                        <label data-en="👤 Full Name" data-hi="👤 पूरा नाम">👤 Full Name</label>
+                        <input type="text" name="name" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-en="📧 Email Address" data-hi="📧 ईमेल पता">📧 Email Address</label>
+                        <input type="email" name="email" placeholder="Enter your email address" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-en="📞 Phone Number" data-hi="📞 फोन नंबर">📞 Phone Number</label>
+                        <input type="text" name="phone" placeholder="Enter your phone number" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-en="🔒 Password" data-hi="🔒 पासवर्ड">🔒 Password</label>
+                        <input type="password" name="password" placeholder="Create a strong password" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-en="🔒 Confirm Password" data-hi="🔒 पासवर्ड की पुष्टि करें">🔒 Confirm Password</label>
+                        <input type="password" name="confirm" placeholder="Re-enter your password" required>
+                    </div>
+                    <button type="submit" class="btn-submit" data-en="Create Account ✨" data-hi="अकाउंट बनाएं ✨">Create Account ✨</button>
+                </form>
+
+                <p class="auth-switch">
+                    <span data-en="Already have an account?" data-hi="पहले से अकाउंट है?">Already have an account?</span>
+                    <a href="/login" data-en="Login here" data-hi="यहाँ लॉगिन करें">Login here</a>
+                </p>
+
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p data-en="© 2025 R.K. Studio. All rights reserved." data-hi="© 2025 आर.के. स्टूडियो। सर्वाधिकार सुरक्षित।">© 2025 R.K. Studio. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function setLang(lang) {
+            localStorage.setItem('rk_lang', lang);
+            applyLang(lang);
+        }
+
+        function applyLang(lang) {
+            document.querySelectorAll('[data-en]').forEach(el => {
+                el.textContent = lang === 'hi' ? el.getAttribute('data-hi') : el.getAttribute('data-en');
+            });
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            document.getElementById('btn-hi').classList.toggle('active', lang === 'hi');
+        }
+
+        const savedLang = localStorage.getItem('rk_lang') || 'en';
+        applyLang(savedLang);
+    </script>
+
+</body>
+</html>

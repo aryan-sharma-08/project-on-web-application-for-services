@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verification — R.K. Studio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <nav>
+        <div class="nav-brand">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="R.K. Studio Logo" class="nav-logo">
+        </div>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/wedding">Wedding & Events</a></li>
+            <li><a href="/printing">Printing Services</a></li>
+            <li><a href="/gallery">Gallery</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="auth-wrapper">
+            <div class="auth-card">
+
+                {% if status == 'success' %}
+                <div class="success-icon">🎉</div>
+                <h2>Email Verified!</h2>
+                <p style="color:#555; margin: 16px 0;">Welcome to R.K. Studio, <strong>{{ name }}</strong>! Your account is now active.</p>
+                <a href="/" class="btn-submit" style="display:block; text-align:center; text-decoration:none; margin-top:20px;">Go to Homepage 🏠</a>
+
+                {% elif status == 'already' %}
+                <div class="success-icon">✅</div>
+                <h2>Already Verified!</h2>
+                <p style="color:#555; margin: 16px 0;">Your email is already verified. Please login to continue.</p>
+                <a href="/login" class="btn-submit" style="display:block; text-align:center; text-decoration:none; margin-top:20px;">Login →</a>
+
+                {% else %}
+                <div class="success-icon">❌</div>
+                <h2>Invalid Link!</h2>
+                <p style="color:#555; margin: 16px 0;">This verification link is invalid or has expired. Please register again.</p>
+                <a href="/register" class="btn-submit" style="display:block; text-align:center; text-decoration:none; margin-top:20px;">Register Again →</a>
+                {% endif %}
+
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 R.K. Studio. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

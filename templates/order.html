@@ -13,80 +13,96 @@
             <img src="{{ url_for('static', filename='logo.png') }}" alt="R.K. Studio Logo" class="nav-logo">
         </div>
         <ul class="nav-links">
-            <li><a href="/">Home</a></li>
-            <li><a href="/wedding">Wedding & Events</a></li>
-            <li><a href="/printing">Printing Services</a></li>
-            <li><a href="/gallery">Gallery</a></li>
-            <li><a href="/contact">Contact Us</a></li>
+            <li><a href="/" data-en="Home" data-hi="होम">Home</a></li>
+            <li><a href="/wedding" data-en="Wedding & Events" data-hi="शादी और इवेंट">Wedding & Events</a></li>
+            <li><a href="/printing" data-en="Printing Services" data-hi="प्रिंटिंग सेवाएं">Printing Services</a></li>
+            <li><a href="/gallery" data-en="Gallery" data-hi="गैलरी">Gallery</a></li>
+            <li><a href="/contact" data-en="Contact Us" data-hi="संपर्क करें">Contact Us</a></li>
         </ul>
+        <div class="nav-auth">
+    {% if current_user.is_authenticated %}
+        <span class="nav-user">👤 {{ current_user.name }}</span>
+        <a href="/myorders" class="nav-btn-login" data-en="My Orders" data-hi="मेरे ऑर्डर">My Orders</a>
+        <a href="/logout" class="nav-btn-logout" data-en="Logout" data-hi="लॉगआउट">Logout</a>
+    {% else %}
+        <a href="/login" class="nav-btn-login" data-en="Login" data-hi="लॉगिन">Login</a>
+        <a href="/register" class="nav-btn-register" data-en="Register" data-hi="रजिस्टर">Register</a>
+    {% endif %}
+</div>
+        <div class="lang-toggle">
+            <button onclick="setLang('en')" id="btn-en" class="lang-btn active">EN</button>
+            <span>|</span>
+            <button onclick="setLang('hi')" id="btn-hi" class="lang-btn">हिं</button>
+        </div>
     </nav>
 
     <header>
-        <h1>🛒 Place Your Order</h1>
-        <p>You are ordering: <strong>{{ service }}</strong></p>
+        <h1 data-en="🛒 Place Your Order" data-hi="🛒 अपना ऑर्डर दें">🛒 Place Your Order</h1>
+        <p data-en="You are ordering:" data-hi="आप ऑर्डर कर रहे हैं:">You are ordering: <strong>{{ service }}</strong></p>
     </header>
 
     <main>
         <div class="order-wrapper">
 
             {% if success %}
-            <!-- Success Message -->
             <div class="order-success">
                 <div class="success-icon">🎉</div>
-                <h2>Order Placed Successfully!</h2>
-                <p>Thank you for choosing <strong>R.K. Studio</strong>! We have received your order for <strong>{{ service }}</strong>.</p>
-                <p>Our team will contact you soon on your provided phone number to confirm the order details and discuss further requirements.</p>
-                <p class="success-note">📞 Expected call within <strong>24 hours</strong>.</p>
-                <a href="/printing" class="btn">← Back to Printing Services</a>
+                <h2 data-en="Order Placed Successfully!" data-hi="ऑर्डर सफलतापूर्वक दिया गया!">Order Placed Successfully!</h2>
+                <p data-en="Thank you for choosing R.K. Studio! We have received your order." data-hi="आर.के. स्टूडियो को चुनने के लिए धन्यवाद! हमें आपका ऑर्डर मिल गया है।">Thank you for choosing <strong>R.K. Studio</strong>! We have received your order for <strong>{{ service }}</strong>.</p>
+                <p data-en="Our team will contact you soon on your provided phone number to confirm the order details and discuss further requirements." data-hi="हमारी टीम जल्द ही आपके दिए गए फोन नंबर पर ऑर्डर की जानकारी की पुष्टि करने और आगे की आवश्यकताओं पर चर्चा के लिए संपर्क करेगी।">Our team will contact you soon on your provided phone number to confirm the order details and discuss further requirements.</p>
+                <p class="success-note" data-en="📞 Expected call within 24 hours." data-hi="📞 24 घंटे के भीतर कॉल की उम्मीद है।">📞 Expected call within <strong>24 hours</strong>.</p>
+                <a href="/printing" class="btn" data-en="← Back to Printing Services" data-hi="← प्रिंटिंग सेवाओं पर वापस जाएं">← Back to Printing Services</a>
             </div>
 
             {% else %}
-            <!-- Order Form -->
             <div class="order-form">
-                <h2>Fill Order Details</h2>
-                <p class="order-subtitle">Service: <span class="service-tag">{{ service }}</span></p>
+                <h2 data-en="Fill Order Details" data-hi="ऑर्डर की जानकारी भरें">Fill Order Details</h2>
+                <p class="order-subtitle">
+                    <span data-en="Service:" data-hi="सेवा:">Service:</span>
+                    <span class="service-tag">{{ service }}</span>
+                </p>
 
                 <form action="/order" method="POST">
                     <input type="hidden" name="service" value="{{ service }}">
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label>👤 Full Name</label>
+                            <label data-en="👤 Full Name" data-hi="👤 पूरा नाम">👤 Full Name</label>
                             <input type="text" name="name" placeholder="Enter your full name" required>
                         </div>
                         <div class="form-group">
-                            <label>📞 Phone Number</label>
+                            <label data-en="📞 Phone Number" data-hi="📞 फोन नंबर">📞 Phone Number</label>
                             <input type="text" name="phone" placeholder="Enter your phone number" required>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label>🔢 Quantity</label>
+                            <label data-en="🔢 Quantity" data-hi="🔢 मात्रा">🔢 Quantity</label>
                             <input type="number" name="quantity" placeholder="e.g. 100" min="1" required>
                         </div>
                         <div class="form-group">
-                            <label>📐 Size</label>
+                            <label data-en="📐 Size" data-hi="📐 साइज़">📐 Size</label>
                             <input type="text" name="size" placeholder="e.g. A4, 3.5x2 inch, Custom">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>🎨 Design Details</label>
+                        <label data-en="🎨 Design Details" data-hi="🎨 डिज़ाइन की जानकारी">🎨 Design Details</label>
                         <textarea name="design" rows="3" placeholder="Describe your design — colors, text, logo, layout etc."></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label>🏠 Delivery Address</label>
+                        <label data-en="🏠 Delivery Address" data-hi="🏠 डिलीवरी पता">🏠 Delivery Address</label>
                         <textarea name="address" rows="2" placeholder="Enter your full delivery address" required></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label>📝 Special Instructions</label>
+                        <label data-en="📝 Special Instructions" data-hi="📝 विशेष निर्देश">📝 Special Instructions</label>
                         <textarea name="instructions" rows="2" placeholder="Any special instructions or requirements..."></textarea>
                     </div>
 
-                    <button type="submit" class="btn-submit">Place Order 🛒</button>
+                    <button type="submit" class="btn-submit" data-en="Place Order 🛒" data-hi="ऑर्डर दें 🛒">Place Order 🛒</button>
                 </form>
             </div>
             {% endif %}
@@ -95,13 +111,32 @@
     </main>
 
     <footer>
-        <p>© 2025 R.K. Studio. All rights reserved.</p>
+        <p data-en="© 2025 R.K. Studio. All rights reserved." data-hi="© 2025 आर.के. स्टूडियो। सर्वाधिकार सुरक्षित।">© 2025 R.K. Studio. All rights reserved.</p>
     </footer>
 
     <!-- WhatsApp Floating Button -->
     <a href="https://wa.me/918000583737" target="_blank" class="whatsapp-float">
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
     </a>
+
+    <script>
+        function setLang(lang) {
+            localStorage.setItem('rk_lang', lang);
+            applyLang(lang);
+        }
+
+        function applyLang(lang) {
+            document.querySelectorAll('[data-en]').forEach(el => {
+                el.textContent = lang === 'hi' ? el.getAttribute('data-hi') : el.getAttribute('data-en');
+            });
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            document.getElementById('btn-hi').classList.toggle('active', lang === 'hi');
+            document.documentElement.lang = lang;
+        }
+
+        const savedLang = localStorage.getItem('rk_lang') || 'en';
+        applyLang(savedLang);
+    </script>
 
 </body>
 </html>

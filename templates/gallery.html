@@ -13,17 +13,32 @@
             <img src="{{ url_for('static', filename='logo.png') }}" alt="R.K. Studio Logo" class="nav-logo">
         </div>
         <ul class="nav-links">
-            <li><a href="/">Home</a></li>
-            <li><a href="/wedding">Wedding & Events</a></li>
-            <li><a href="/printing">Printing Services</a></li>
-            <li><a href="/gallery">Gallery</a></li>
-            <li><a href="/contact">Contact Us</a></li>
+            <li><a href="/" data-en="Home" data-hi="होम">Home</a></li>
+            <li><a href="/wedding" data-en="Wedding & Events" data-hi="शादी और इवेंट">Wedding & Events</a></li>
+            <li><a href="/printing" data-en="Printing Services" data-hi="प्रिंटिंग सेवाएं">Printing Services</a></li>
+            <li><a href="/gallery" data-en="Gallery" data-hi="गैलरी">Gallery</a></li>
+            <li><a href="/contact" data-en="Contact Us" data-hi="संपर्क करें">Contact Us</a></li>
         </ul>
+        <div class="nav-auth">
+    {% if current_user.is_authenticated %}
+        <span class="nav-user">👤 {{ current_user.name }}</span>
+        <a href="/myorders" class="nav-btn-login" data-en="My Orders" data-hi="मेरे ऑर्डर">My Orders</a>
+        <a href="/logout" class="nav-btn-logout" data-en="Logout" data-hi="लॉगआउट">Logout</a>
+    {% else %}
+        <a href="/login" class="nav-btn-login" data-en="Login" data-hi="लॉगिन">Login</a>
+        <a href="/register" class="nav-btn-register" data-en="Register" data-hi="रजिस्टर">Register</a>
+    {% endif %}
+</div>
+        <div class="lang-toggle">
+            <button onclick="setLang('en')" id="btn-en" class="lang-btn active">EN</button>
+            <span>|</span>
+            <button onclick="setLang('hi')" id="btn-hi" class="lang-btn">हिं</button>
+        </div>
     </nav>
 
     <header>
-        <h1>📸 Our Gallery</h1>
-        <p>A glimpse of our finest work at R.K. Studio</p>
+        <h1 data-en="📸 Our Gallery" data-hi="📸 हमारी गैलरी">📸 Our Gallery</h1>
+        <p data-en="A glimpse of our finest work at R.K. Studio" data-hi="आर.के. स्टूडियो के बेहतरीन कामों की एक झलक">A glimpse of our finest work at R.K. Studio</p>
     </header>
 
     <main>
@@ -31,10 +46,10 @@
 
             <!-- Filter Buttons -->
             <div class="gallery-filters">
-                <button class="filter-btn active" onclick="filterGallery('all')">All</button>
-                <button class="filter-btn" onclick="filterGallery('wedding')">Wedding</button>
-                <button class="filter-btn" onclick="filterGallery('events')">Events</button>
-                <button class="filter-btn" onclick="filterGallery('printing')">Printing</button>
+                <button class="filter-btn active" onclick="filterGallery('all', this)" data-en="All" data-hi="सभी">All</button>
+                <button class="filter-btn" onclick="filterGallery('wedding', this)" data-en="Wedding" data-hi="शादी">Wedding</button>
+                <button class="filter-btn" onclick="filterGallery('events', this)" data-en="Events" data-hi="इवेंट">Events</button>
+                <button class="filter-btn" onclick="filterGallery('printing', this)" data-en="Printing" data-hi="प्रिंटिंग">Printing</button>
             </div>
 
             <!-- Gallery Grid -->
@@ -43,63 +58,63 @@
                 <div class="gallery-item wedding" onclick="openLightbox(this)">
                     <img src="https://picsum.photos/seed/wedding1/600/400" alt="Wedding Photography">
                     <div class="gallery-overlay">
-                        <p>💍 Wedding Photography</p>
+                        <p data-en="💍 Wedding Photography" data-hi="💍 वेडिंग फोटोग्राफी">💍 Wedding Photography</p>
                     </div>
                 </div>
 
                 <div class="gallery-item wedding" onclick="openLightbox(this)">
                     <img src="https://picsum.photos/seed/wedding2/600/400" alt="Wedding Videography">
                     <div class="gallery-overlay">
-                        <p>🎥 Wedding Videography</p>
+                        <p data-en="🎥 Wedding Videography" data-hi="🎥 वेडिंग वीडियोग्राफी">🎥 Wedding Videography</p>
                     </div>
                 </div>
 
                 <div class="gallery-item wedding" onclick="openLightbox(this)">
                     <img src="https://picsum.photos/seed/wedding3/600/400" alt="Drone Coverage">
                     <div class="gallery-overlay">
-                        <p>🚁 Drone Coverage</p>
+                        <p data-en="🚁 Drone Coverage" data-hi="🚁 ड्रोन कवरेज">🚁 Drone Coverage</p>
                     </div>
                 </div>
 
                 <div class="gallery-item events" onclick="openLightbox(this)">
                     <img src="https://picsum.photos/seed/event1/600/400" alt="Corporate Event">
                     <div class="gallery-overlay">
-                        <p>🏢 Corporate Event</p>
+                        <p data-en="🏢 Corporate Event" data-hi="🏢 कॉर्पोरेट इवेंट">🏢 Corporate Event</p>
                     </div>
                 </div>
 
                 <div class="gallery-item events" onclick="openLightbox(this)">
                     <img src="https://picsum.photos/seed/event2/600/400" alt="Live Event Production">
                     <div class="gallery-overlay">
-                        <p>🎙️ Live Event Production</p>
+                        <p data-en="🎙️ Live Event Production" data-hi="🎙️ लाइव इवेंट प्रोडक्शन">🎙️ Live Event Production</p>
                     </div>
                 </div>
 
                 <div class="gallery-item events" onclick="openLightbox(this)">
                     <img src="https://picsum.photos/seed/event3/600/400" alt="LED Wall">
                     <div class="gallery-overlay">
-                        <p>📺 LED Wall Setup</p>
+                        <p data-en="📺 LED Wall Setup" data-hi="📺 एलईडी वॉल सेटअप">📺 LED Wall Setup</p>
                     </div>
                 </div>
 
                 <div class="gallery-item printing" onclick="openLightbox(this)">
                     <img src="https://picsum.photos/seed/print1/600/400" alt="ID Card Printing">
                     <div class="gallery-overlay">
-                        <p>🪪 ID Card Printing</p>
+                        <p data-en="🪪 ID Card Printing" data-hi="🪪 आईडी कार्ड प्रिंटिंग">🪪 ID Card Printing</p>
                     </div>
                 </div>
 
                 <div class="gallery-item printing" onclick="openLightbox(this)">
                     <img src="https://picsum.photos/seed/print2/600/400" alt="Banner Printing">
                     <div class="gallery-overlay">
-                        <p>🖼️ Banner Printing</p>
+                        <p data-en="🖼️ Banner Printing" data-hi="🖼️ बैनर प्रिंटिंग">🖼️ Banner Printing</p>
                     </div>
                 </div>
 
                 <div class="gallery-item printing" onclick="openLightbox(this)">
                     <img src="https://picsum.photos/seed/print3/600/400" alt="Visiting Cards">
                     <div class="gallery-overlay">
-                        <p>📇 Visiting Cards</p>
+                        <p data-en="📇 Visiting Cards" data-hi="📇 विजिटिंग कार्ड">📇 Visiting Cards</p>
                     </div>
                 </div>
 
@@ -115,7 +130,7 @@
     </div>
 
     <footer>
-        <p>© 2025 R.K. Studio. All rights reserved.</p>
+        <p data-en="© 2025 R.K. Studio. All rights reserved." data-hi="© 2025 आर.के. स्टूडियो। सर्वाधिकार सुरक्षित।">© 2025 R.K. Studio. All rights reserved.</p>
     </footer>
 
     <!-- WhatsApp Floating Button -->
@@ -124,24 +139,17 @@
     </a>
 
     <script>
-        // Filter Gallery
-        function filterGallery(category) {
+        // ── Filter Gallery ──
+        function filterGallery(category, btn) {
             const items = document.querySelectorAll('.gallery-item');
-            const buttons = document.querySelectorAll('.filter-btn');
-
-            buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
             items.forEach(item => {
-                if (category === 'all' || item.classList.contains(category)) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
+                item.style.display = (category === 'all' || item.classList.contains(category)) ? 'block' : 'none';
             });
         }
 
-        // Lightbox
+        // ── Lightbox ──
         function openLightbox(element) {
             const img = element.querySelector('img');
             const caption = element.querySelector('.gallery-overlay p');
@@ -153,6 +161,24 @@
         function closeLightbox() {
             document.getElementById('lightbox').style.display = 'none';
         }
+
+        // ── Language Toggle ──
+        function setLang(lang) {
+            localStorage.setItem('rk_lang', lang);
+            applyLang(lang);
+        }
+
+        function applyLang(lang) {
+            document.querySelectorAll('[data-en]').forEach(el => {
+                el.textContent = lang === 'hi' ? el.getAttribute('data-hi') : el.getAttribute('data-en');
+            });
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            document.getElementById('btn-hi').classList.toggle('active', lang === 'hi');
+            document.documentElement.lang = lang;
+        }
+
+        const savedLang = localStorage.getItem('rk_lang') || 'en';
+        applyLang(savedLang);
     </script>
 
 </body>

@@ -1218,3 +1218,516 @@ header h1 {
         padding: 10px 16px;
     }
 }
+/* ── Language Toggle ── */
+.lang-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #888;
+    font-size: 0.85rem;
+}
+
+.lang-btn {
+    background: transparent;
+    border: 1px solid #444;
+    color: #aaa;
+    padding: 4px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.lang-btn.active {
+    background-color: #c9a96e;
+    border-color: #c9a96e;
+    color: #1a1a2e;
+    font-weight: 600;
+}
+
+.lang-btn:hover {
+    border-color: #c9a96e;
+    color: #c9a96e;
+}
+/* ── Auth Pages (Login & Register) ── */
+.auth-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+}
+
+.auth-card {
+    background: white;
+    border-radius: 16px;
+    padding: 50px 40px;
+    width: 100%;
+    max-width: 460px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    border-top: 5px solid #c9a96e;
+    text-align: center;
+}
+
+.auth-icon {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.auth-card h2 {
+    font-family: 'Playfair Display', serif;
+    color: #1a1a2e;
+    font-size: 1.8rem;
+    margin-bottom: 24px;
+}
+
+.auth-card .form-group {
+    text-align: left;
+}
+
+.auth-switch {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.auth-switch a {
+    color: #c9a96e;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 6px;
+}
+
+.auth-switch a:hover {
+    color: #1a1a2e;
+}
+
+/* ── Login Popup ── */
+.login-popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-popup.show {
+    display: flex;
+}
+
+.popup-box {
+    background: white;
+    border-radius: 16px;
+    padding: 40px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    border-top: 5px solid #c9a96e;
+    animation: popupIn 0.3s ease;
+}
+
+@keyframes popupIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+}
+
+.popup-box .popup-icon {
+    font-size: 3rem;
+    margin-bottom: 16px;
+}
+
+.popup-box h3 {
+    font-family: 'Playfair Display', serif;
+    color: #1a1a2e;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+}
+
+.popup-box p {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+}
+
+.popup-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.popup-btn-login {
+    background-color: #1a1a2e;
+    color: white;
+    padding: 10px 28px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+}
+
+.popup-btn-login:hover {
+    background-color: #c9a96e;
+    color: #1a1a2e;
+}
+
+.popup-btn-cancel {
+    background-color: #f0f0f0;
+    color: #444;
+    padding: 10px 28px;
+    border-radius: 30px;
+    border: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    transition: background 0.3s ease;
+}
+
+.popup-btn-cancel:hover {
+    background-color: #ddd;
+}
+
+/* ── Navbar Auth Buttons ── */
+.nav-auth {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-user {
+    color: #c9a96e;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.nav-btn-login {
+    background-color: transparent;
+    border: 1px solid #c9a96e;
+    color: #c9a96e;
+    padding: 6px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+}
+
+.nav-btn-login:hover {
+    background-color: #c9a96e;
+    color: #1a1a2e;
+}
+
+.nav-btn-register {
+    background-color: #c9a96e;
+    color: #1a1a2e;
+    padding: 6px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.nav-btn-register:hover {
+    background-color: white;
+    color: #1a1a2e;
+}
+
+.nav-btn-logout {
+    background-color: transparent;
+    border: 1px solid #888;
+    color: #aaa;
+    padding: 6px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+}
+
+.nav-btn-logout:hover {
+    border-color: #c0392b;
+    color: #c0392b;
+}
+
+@media (max-width: 768px) {
+    .auth-card {
+        padding: 36px 24px;
+    }
+    .nav-auth {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+/* ── My Orders Page ── */
+.myorders-wrapper {
+    padding: 60px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.myorders-section {
+    margin-bottom: 60px;
+}
+
+.myorders-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #f0e6d3;
+}
+
+.myorders-header h2 {
+    font-family: 'Playfair Display', serif;
+    color: #1a1a2e;
+    font-size: 1.5rem;
+}
+
+.orders-count {
+    background-color: #f0e6d3;
+    color: #8a6a3a;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.orders-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.order-card {
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+    border-top: 4px solid #c9a96e;
+    overflow: hidden;
+}
+
+.booking-card {
+    border-top-color: #1a1a2e;
+}
+
+.order-card-header {
+    background: #f9f6f1;
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.order-service {
+    background-color: #1a1a2e;
+    color: #c9a96e;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.order-date {
+    color: #888;
+    font-size: 0.82rem;
+}
+
+.order-card-body {
+    padding: 20px;
+}
+
+.order-detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 8px 0;
+    border-bottom: 1px solid #f5f5f5;
+    gap: 12px;
+}
+
+.order-detail:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    color: #888;
+    font-size: 0.85rem;
+    min-width: 120px;
+    flex-shrink: 0;
+}
+
+.detail-value {
+    color: #333;
+    font-size: 0.88rem;
+    text-align: right;
+    word-break: break-word;
+}
+
+.order-card-footer {
+    padding: 14px 20px;
+    background: #f9f6f1;
+    text-align: center;
+}
+
+.order-status.pending {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 500;
+}
+
+/* ── No Orders ── */
+.no-orders {
+    text-align: center;
+    padding: 50px 20px;
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.no-orders-icon {
+    font-size: 3rem;
+    margin-bottom: 12px;
+}
+
+.no-orders p {
+    color: #888;
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+    .myorders-wrapper {
+        padding: 40px 16px;
+    }
+
+    .orders-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .order-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+/* ── Order Status Colors ── */
+.order-status.pending {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 500;
+}
+
+.order-status.confirmed {
+    background-color: #e6f4ea;
+    color: #2d6a4f;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 500;
+}
+
+.order-status.in-progress {
+    background-color: #e3f2fd;
+    color: #1565c0;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 500;
+}
+
+.order-status.completed {
+    background-color: #e8f5e9;
+    color: #1b5e20;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 500;
+}
+
+.order-status.cancelled {
+    background-color: #fde8e8;
+    color: #c0392b;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 500;
+}
+
+/* ── Status Select in Admin ── */
+.status-select {
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.82rem;
+    cursor: pointer;
+    font-weight: 500;
+    outline: none;
+}
+
+.status-select.pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-select.confirmed {
+    background-color: #e6f4ea;
+    color: #2d6a4f;
+}
+
+.status-select.in-progress {
+    background-color: #e3f2fd;
+    color: #1565c0;
+}
+
+.status-select.completed {
+    background-color: #e8f5e9;
+    color: #1b5e20;
+}
+
+.status-select.cancelled {
+    background-color: #fde8e8;
+    color: #c0392b;
+}
+
+/* ── Cancel Button ── */
+.btn-cancel {
+    background: transparent;
+    border: 1px solid #c0392b;
+    color: #c0392b;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    margin-left: 10px;
+    transition: all 0.3s ease;
+}
+
+.btn-cancel:hover {
+    background-color: #c0392b;
+    color: white;
+}
+
+.order-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 14px 20px;
+    background: #f9f6f1;
+}

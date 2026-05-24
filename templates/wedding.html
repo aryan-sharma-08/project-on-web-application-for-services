@@ -13,114 +13,140 @@
             <img src="{{ url_for('static', filename='logo.png') }}" alt="R.K. Studio Logo" class="nav-logo">
         </div>
         <ul class="nav-links">
-            <li><a href="/">Home</a></li>
-            <li><a href="/wedding">Wedding & Events</a></li>
-            <li><a href="/printing">Printing Services</a></li>
-            <li><a href="/gallery">Gallery</a></li>
-            <li><a href="/contact">Contact Us</a></li>
+            <li><a href="/" data-en="Home" data-hi="होम">Home</a></li>
+            <li><a href="/wedding" data-en="Wedding & Events" data-hi="शादी और इवेंट">Wedding & Events</a></li>
+            <li><a href="/printing" data-en="Printing Services" data-hi="प्रिंटिंग सेवाएं">Printing Services</a></li>
+            <li><a href="/gallery" data-en="Gallery" data-hi="गैलरी">Gallery</a></li>
+            <li><a href="/contact" data-en="Contact Us" data-hi="संपर्क करें">Contact Us</a></li>
         </ul>
+        <div class="nav-auth">
+            {% if current_user.is_authenticated %}
+            <span class="nav-user">👤 {{ current_user.name }}</span>
+            <a href="/myorders" class="nav-btn-login" data-en="My Orders"   data-hi="मेरे ऑर्डर">My Orders</a>
+            <a href="/logout" class="nav-btn-logout" data-en="Logout" data-hi="लॉगआउट">Logout</a>
+            {% else %}
+             <a href="/login" class="nav-btn-login" data-en="Login"     data-hi="लॉगिन">Login</a>
+            <a href="/register" class="nav-btn-register" data-en="Register" data-hi="रजिस्टर">Register</a>
+             {% endif %}
+        </div>
+        
+        <div class="lang-toggle">
+            <button onclick="setLang('en')" id="btn-en" class="lang-btn active">EN</button>
+            <span>|</span>
+            <button onclick="setLang('hi')" id="btn-hi" class="lang-btn">हिं</button>
+        </div>
     </nav>
 
     <header>
-        <h1>🎬 Wedding & Event Services</h1>
-        <p>Professional coverage for your most precious moments</p>
-        <!-- Book Now button below header -->
-        <a href="/booking" class="btn-book-top">📅 Book Now</a>
+        <h1 data-en="🎬 Wedding & Event Services" data-hi="🎬 शादी और इवेंट सेवाएं">🎬 Wedding & Event Services</h1>
+        <p data-en="Professional coverage for your most precious moments" data-hi="आपके सबसे खास पलों की पेशेवर कवरेज">Professional coverage for your most precious moments</p>
+        <button onclick="handleBooking()" class="btn-book-top" data-en="📅 Book Now" data-hi="📅 अभी बुक करें">📅 Book Now</button>
     </header>
 
     <main>
 
-        <!-- Quick Book Banner below header -->
         <div class="quick-book-bar">
-            <span>🎬 Ready to capture your special moment?</span>
-            <a href="/booking" class="btn-quick-book">Book Now →</a>
+            <span data-en="🎬 Ready to capture your special moment?" data-hi="🎬 अपने खास पल को कैद करने के लिए तैयार हैं?">🎬 Ready to capture your special moment?</span>
+            <button onclick="handleBooking()" class="btn-quick-book" data-en="Book Now →" data-hi="अभी बुक करें →">Book Now →</button>
         </div>
 
         <div class="services-container">
 
             <div class="service-card">
                 <div class="icon">📷</div>
-                <h2>Photography</h2>
-                <p>Professional photography capturing every special moment beautifully.</p>
-                <a href="/booking" class="btn">Book Now</a>
+                <h2 data-en="Photography" data-hi="फोटोग्राफी">Photography</h2>
+                <p data-en="Professional photography capturing every special moment beautifully." data-hi="हर खास पल को खूबसूरती से कैद करती पेशेवर फोटोग्राफी।">Professional photography capturing every special moment beautifully.</p>
+                <button onclick="handleBooking()" class="btn" data-en="Book Now" data-hi="अभी बुक करें">Book Now</button>
             </div>
 
             <div class="service-card">
                 <div class="icon">🎥</div>
-                <h2>Videography</h2>
-                <p>High quality video recording of your events and ceremonies.</p>
-                <a href="/booking" class="btn">Book Now</a>
+                <h2 data-en="Videography" data-hi="वीडियोग्राफी">Videography</h2>
+                <p data-en="High quality video recording of your events and ceremonies." data-hi="आपके इवेंट और समारोहों की उच्च गुणवत्ता वाली वीडियो रिकॉर्डिंग।">High quality video recording of your events and ceremonies.</p>
+                <button onclick="handleBooking()" class="btn" data-en="Book Now" data-hi="अभी बुक करें">Book Now</button>
             </div>
 
             <div class="service-card">
                 <div class="icon">🚁</div>
-                <h2>Drone Coverage</h2>
-                <p>Stunning aerial shots and bird's eye view footage of your event.</p>
-                <a href="/booking" class="btn">Book Now</a>
+                <h2 data-en="Drone Coverage" data-hi="ड्रोन कवरेज">Drone Coverage</h2>
+                <p data-en="Stunning aerial shots and bird's eye view footage of your event." data-hi="आपके इवेंट की शानदार हवाई तस्वीरें और बर्ड्स आई व्यू फुटेज।">Stunning aerial shots and bird's eye view footage of your event.</p>
+                <button onclick="handleBooking()" class="btn" data-en="Book Now" data-hi="अभी बुक करें">Book Now</button>
             </div>
 
             <div class="service-card">
                 <div class="icon">🎦</div>
-                <h2>Crane / Jimmy Jib Camera</h2>
-                <p>Cinematic crane shots for dramatic and professional event coverage.</p>
-                <a href="/booking" class="btn">Book Now</a>
+                <h2 data-en="Crane / Jimmy Jib Camera" data-hi="क्रेन / जिमी जिब कैमरा">Crane / Jimmy Jib Camera</h2>
+                <p data-en="Cinematic crane shots for dramatic and professional event coverage." data-hi="नाटकीय और पेशेवर इवेंट कवरेज के लिए सिनेमाई क्रेन शॉट्स।">Cinematic crane shots for dramatic and professional event coverage.</p>
+                <button onclick="handleBooking()" class="btn" data-en="Book Now" data-hi="अभी बुक करें">Book Now</button>
             </div>
 
             <div class="service-card">
                 <div class="icon">📺</div>
-                <h2>LED Wall / Plasma Screen</h2>
-                <p>Large LED walls and plasma screens to enhance your event experience.</p>
-                <a href="/booking" class="btn">Book Now</a>
+                <h2 data-en="LED Wall / Plasma Screen" data-hi="एलईडी वॉल / प्लाज़्मा स्क्रीन">LED Wall / Plasma Screen</h2>
+                <p data-en="Large LED walls and plasma screens to enhance your event experience." data-hi="आपके इवेंट के अनुभव को बेहतर बनाने के लिए बड़ी एलईडी वॉल और प्लाज़्मा स्क्रीन।">Large LED walls and plasma screens to enhance your event experience.</p>
+                <button onclick="handleBooking()" class="btn" data-en="Book Now" data-hi="अभी बुक करें">Book Now</button>
             </div>
 
             <div class="service-card">
                 <div class="icon">🎙️</div>
-                <h2>Live Event Production</h2>
-                <p>Full end-to-end live event production and management services.</p>
-                <a href="/booking" class="btn">Book Now</a>
+                <h2 data-en="Live Event Production" data-hi="लाइव इवेंट प्रोडक्शन">Live Event Production</h2>
+                <p data-en="Full end-to-end live event production and management services." data-hi="पूर्ण लाइव इवेंट प्रोडक्शन और प्रबंधन सेवाएं।">Full end-to-end live event production and management services.</p>
+                <button onclick="handleBooking()" class="btn" data-en="Book Now" data-hi="अभी बुक करें">Book Now</button>
             </div>
 
             <div class="service-card">
                 <div class="icon">💍</div>
-                <h2>Wedding Coverage</h2>
-                <p>Complete wedding day coverage from start to finish.</p>
-                <a href="/booking" class="btn">Book Now</a>
+                <h2 data-en="Wedding Coverage" data-hi="वेडिंग कवरेज">Wedding Coverage</h2>
+                <p data-en="Complete wedding day coverage from start to finish." data-hi="शुरू से अंत तक पूरी शादी की कवरेज।">Complete wedding day coverage from start to finish.</p>
+                <button onclick="handleBooking()" class="btn" data-en="Book Now" data-hi="अभी बुक करें">Book Now</button>
             </div>
 
             <div class="service-card">
                 <div class="icon">🏢</div>
-                <h2>Corporate Event Coverage</h2>
-                <p>Professional coverage for corporate events, conferences and seminars.</p>
-                <a href="/booking" class="btn">Book Now</a>
+                <h2 data-en="Corporate Event Coverage" data-hi="कॉर्पोरेट इवेंट कवरेज">Corporate Event Coverage</h2>
+                <p data-en="Professional coverage for corporate events, conferences and seminars." data-hi="कॉर्पोरेट इवेंट, सम्मेलनों और सेमिनारों की पेशेवर कवरेज।">Professional coverage for corporate events, conferences and seminars.</p>
+                <button onclick="handleBooking()" class="btn" data-en="Book Now" data-hi="अभी बुक करें">Book Now</button>
             </div>
 
             <div class="service-card">
                 <div class="icon">📡</div>
-                <h2>Live Streaming</h2>
-                <p>Stream your event live to audiences anywhere in the world.</p>
-                <a href="/booking" class="btn">Book Now</a>
+                <h2 data-en="Live Streaming" data-hi="लाइव स्ट्रीमिंग">Live Streaming</h2>
+                <p data-en="Stream your event live to audiences anywhere in the world." data-hi="अपने इवेंट को दुनिया में कहीं भी दर्शकों तक लाइव स्ट्रीम करें।">Stream your event live to audiences anywhere in the world.</p>
+                <button onclick="handleBooking()" class="btn" data-en="Book Now" data-hi="अभी बुक करें">Book Now</button>
             </div>
 
             <div class="service-card">
                 <div class="icon">🎞️</div>
-                <h2>Video Editing & Post Production</h2>
-                <p>Professional editing and post production to perfect your footage.</p>
-                <a href="/booking" class="btn">Book Now</a>
+                <h2 data-en="Video Editing & Post Production" data-hi="वीडियो एडिटिंग और पोस्ट प्रोडक्शन">Video Editing & Post Production</h2>
+                <p data-en="Professional editing and post production to perfect your footage." data-hi="आपके फुटेज को परफेक्ट बनाने के लिए पेशेवर एडिटिंग और पोस्ट प्रोडक्शन।">Professional editing and post production to perfect your footage.</p>
+                <button onclick="handleBooking()" class="btn" data-en="Book Now" data-hi="अभी बुक करें">Book Now</button>
             </div>
 
         </div>
 
-        <!-- Bottom Booking Banner -->
         <div class="booking-banner">
-            <h2>Ready to Book?</h2>
-            <p>Choose your services, pick a package or build your own — and we'll take care of the rest!</p>
-            <a href="/booking" class="btn">Book Now 🎬</a>
+            <h2 data-en="Ready to Book?" data-hi="बुक करने के लिए तैयार हैं?">Ready to Book?</h2>
+            <p data-en="Choose your services, pick a package or build your own — and we'll take care of the rest!" data-hi="अपनी सेवाएं चुनें, पैकेज चुनें या अपना बनाएं — बाकी हम संभालेंगे!">Choose your services, pick a package or build your own — and we'll take care of the rest!</p>
+            <button onclick="handleBooking()" class="btn" data-en="Book Now 🎬" data-hi="अभी बुक करें 🎬">Book Now 🎬</button>
         </div>
 
     </main>
 
+    <!-- Login Popup -->
+    <div class="login-popup" id="loginPopup">
+        <div class="popup-box">
+            <div class="popup-icon">🔐</div>
+            <h3 data-en="Login Required" data-hi="लॉगिन आवश्यक है">Login Required</h3>
+            <p data-en="Please login to book our services. It's quick and free!" data-hi="हमारी सेवाएं बुक करने के लिए कृपया लॉगिन करें।">Please login to book our services. It's quick and free!</p>
+            <div class="popup-buttons">
+                <a href="/login" class="popup-btn-login" data-en="Login" data-hi="लॉगिन">Login</a>
+                <button onclick="hideLoginPopup()" class="popup-btn-cancel" data-en="Cancel" data-hi="रद्द करें">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <footer>
-        <p>© 2025 R.K. Studio. All rights reserved.</p>
+        <p data-en="© 2025 R.K. Studio. All rights reserved." data-hi="© 2025 आर.के. स्टूडियो। सर्वाधिकार सुरक्षित।">© 2025 R.K. Studio. All rights reserved.</p>
     </footer>
 
     <!-- WhatsApp Floating Button -->
@@ -129,9 +155,51 @@
     </a>
 
     <!-- Floating Book Now Button -->
-    <a href="/booking" class="book-float">
-        📅 Book Now
-    </a>
+    <button onclick="handleBooking()" class="book-float" data-en="📅 Book Now" data-hi="📅 अभी बुक करें">📅 Book Now</button>
+
+    <script>
+        // ── Handle Booking Button ──
+        const isLoggedIn = {{ 'true' if current_user.is_authenticated else 'false' }};
+
+        function handleBooking() {
+            if (isLoggedIn) {
+                window.location.href = '/booking';
+            } else {
+                showLoginPopup();
+            }
+        }
+
+        // ── Login Popup ──
+        function showLoginPopup() {
+            document.getElementById('loginPopup').classList.add('show');
+        }
+
+        function hideLoginPopup() {
+            document.getElementById('loginPopup').classList.remove('show');
+        }
+
+        document.getElementById('loginPopup').addEventListener('click', function(e) {
+            if (e.target === this) hideLoginPopup();
+        });
+
+        // ── Language Toggle ──
+        function setLang(lang) {
+            localStorage.setItem('rk_lang', lang);
+            applyLang(lang);
+        }
+
+        function applyLang(lang) {
+            document.querySelectorAll('[data-en]').forEach(el => {
+                el.textContent = lang === 'hi' ? el.getAttribute('data-hi') : el.getAttribute('data-en');
+            });
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            document.getElementById('btn-hi').classList.toggle('active', lang === 'hi');
+            document.documentElement.lang = lang;
+        }
+
+        const savedLang = localStorage.getItem('rk_lang') || 'en';
+        applyLang(savedLang);
+    </script>
 
 </body>
 </html>

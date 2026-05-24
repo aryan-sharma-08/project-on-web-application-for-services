@@ -3,27 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us</title>
+    <title>Contact Us — R.K. Studio</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
     <nav>
-    <div class="nav-brand">
-    <img src="{{ url_for('static', filename='logo.png') }}" alt="R.K. Studio Logo" class="nav-logo">
-</div>
+        <div class="nav-brand">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="R.K. Studio Logo" class="nav-logo">
+        </div>
         <ul class="nav-links">
-            <li><a href="/">Home</a></li>
-            <li><a href="/wedding">Wedding & Events</a></li>
-            <li><a href="/printing">Printing Services</a></li>
-            <li><a href="/contact">Contact Us</a></li>
-            <li><a href="/gallery">Gallery</a></li>
+            <li><a href="/" data-en="Home" data-hi="होम">Home</a></li>
+            <li><a href="/wedding" data-en="Wedding & Events" data-hi="शादी और इवेंट">Wedding & Events</a></li>
+            <li><a href="/printing" data-en="Printing Services" data-hi="प्रिंटिंग सेवाएं">Printing Services</a></li>
+            <li><a href="/gallery" data-en="Gallery" data-hi="गैलरी">Gallery</a></li>
+            <li><a href="/contact" data-en="Contact Us" data-hi="संपर्क करें">Contact Us</a></li>
         </ul>
+        <div class="nav-auth">
+    {% if current_user.is_authenticated %}
+        <span class="nav-user">👤 {{ current_user.name }}</span>
+        <a href="/myorders" class="nav-btn-login" data-en="My Orders" data-hi="मेरे ऑर्डर">My Orders</a>
+        <a href="/logout" class="nav-btn-logout" data-en="Logout" data-hi="लॉगआउट">Logout</a>
+    {% else %}
+        <a href="/login" class="nav-btn-login" data-en="Login" data-hi="लॉगिन">Login</a>
+        <a href="/register" class="nav-btn-register" data-en="Register" data-hi="रजिस्टर">Register</a>
+    {% endif %}
+</div>
+        <div class="lang-toggle">
+            <button onclick="setLang('en')" id="btn-en" class="lang-btn active">EN</button>
+            <span>|</span>
+            <button onclick="setLang('hi')" id="btn-hi" class="lang-btn">हिं</button>
+        </div>
     </nav>
 
     <header>
-        <h1>📞 Contact Us</h1>
-        <p>We'd love to hear from you. Get in touch with us today!</p>
+        <h1 data-en="📞 Contact Us" data-hi="📞 संपर्क करें">📞 Contact Us</h1>
+        <p data-en="We'd love to hear from you. Get in touch with us today!" data-hi="हम आपसे सुनना चाहते हैं। आज ही हमसे संपर्क करें!">We'd love to hear from you. Get in touch with us today!</p>
     </header>
 
     <main>
@@ -31,20 +46,20 @@
 
             <!-- Left Side: Contact Info -->
             <div class="contact-info">
-                <h2>Get In Touch</h2>
+                <h2 data-en="Get In Touch" data-hi="संपर्क करें">Get In Touch</h2>
 
                 <div class="info-item">
                     <span class="info-icon">📍</span>
                     <div>
-                        <h4>Address</h4>
-                        <p>Model Town Jaipur, Rajasthan(302017)</p>
+                        <h4 data-en="Address" data-hi="पता">Address</h4>
+                        <p data-en="123 Your Street, Your City, India" data-hi="123 आपकी गली, आपका शहर, भारत">123 Your Street, Your City, India</p>
                     </div>
                 </div>
 
                 <div class="info-item">
                     <span class="info-icon">📞</span>
                     <div>
-                        <h4>Phone</h4>
+                        <h4 data-en="Phone" data-hi="फोन">Phone</h4>
                         <p>+91 8000583737</p>
                     </div>
                 </div>
@@ -52,16 +67,16 @@
                 <div class="info-item">
                     <span class="info-icon">📧</span>
                     <div>
-                        <h4>Email</h4>
-                        <p>rkstudiodsa@gmail..com</p>
+                        <h4 data-en="Email" data-hi="ईमेल">Email</h4>
+                        <p>info@rkstudio.com</p>
                     </div>
                 </div>
 
                 <div class="info-item">
                     <span class="info-icon">🕐</span>
                     <div>
-                        <h4>Working Hours</h4>
-                        <p>Mon - Sat: 9:00 AM – 6:00 PM</p>
+                        <h4 data-en="Working Hours" data-hi="कार्य समय">Working Hours</h4>
+                        <p data-en="Mon - Sat: 9:00 AM – 6:00 PM" data-hi="सोम - शनि: सुबह 9:00 – शाम 6:00">Mon - Sat: 9:00 AM – 6:00 PM</p>
                     </div>
                 </div>
 
@@ -69,45 +84,47 @@
 
             <!-- Right Side: Contact Form -->
             <div class="contact-form">
-                <h2>Send a Message</h2>
+                <h2 data-en="Send a Message" data-hi="संदेश भेजें">Send a Message</h2>
+
                 {% if success %}
-                <div class="success-message">
-               ✅ Thank you! Your message has been sent. We will contact you soon!
+                <div class="success-message" data-en="✅ Thank you! Your message has been sent. We will contact you soon!" data-hi="✅ धन्यवाद! आपका संदेश भेज दिया गया है। हम जल्द ही आपसे संपर्क करेंगे!">
+                    ✅ Thank you! Your message has been sent. We will contact you soon!
                 </div>
                 {% endif %}
+
                 <form action="/contact" method="POST">
                     <div class="form-group">
-                        <label>Your Name</label>
+                        <label data-en="Your Name" data-hi="आपका नाम">Your Name</label>
                         <input type="text" name="name" placeholder="Enter your name" required>
                     </div>
                     <div class="form-group">
-                        <label>Phone Number</label>
+                        <label data-en="Phone Number" data-hi="फोन नंबर">Phone Number</label>
                         <input type="text" name="phone" placeholder="Enter your phone number" required>
                     </div>
                     <div class="form-group">
-                        <label>Email Address</label>
+                        <label data-en="Email Address" data-hi="ईमेल पता">Email Address</label>
                         <input type="email" name="email" placeholder="Enter your email" required>
                     </div>
                     <div class="form-group">
-                        <label>Service Interested In</label>
+                        <label data-en="Service Interested In" data-hi="रुचि की सेवा">Service Interested In</label>
                         <select name="service">
-                            <option value="">-- Select a Service --</option>
-                            <option value="Photography">Photography</option>
-                            <option value="Videography">Videography</option>
-                            <option value="Drone Coverage">Drone Coverage</option>
-                            <option value="Wedding Coverage">Wedding Coverage</option>
-                            <option value="Live Streaming">Live Streaming</option>
-                            <option value="ID Card Printing">ID Card Printing</option>
-                            <option value="Visiting Card Printing">Visiting Card Printing</option>
-                            <option value="Flex & Banner Printing">Flex & Banner Printing</option>
-                            <option value="Custom Printing">Custom Printing</option>
+                            <option value="" data-en="-- Select a Service --" data-hi="-- सेवा चुनें --">-- Select a Service --</option>
+                            <option value="Photography" data-en="Photography" data-hi="फोटोग्राफी">Photography</option>
+                            <option value="Videography" data-en="Videography" data-hi="वीडियोग्राफी">Videography</option>
+                            <option value="Drone Coverage" data-en="Drone Coverage" data-hi="ड्रोन कवरेज">Drone Coverage</option>
+                            <option value="Wedding Coverage" data-en="Wedding Coverage" data-hi="वेडिंग कवरेज">Wedding Coverage</option>
+                            <option value="Live Streaming" data-en="Live Streaming" data-hi="लाइव स्ट्रीमिंग">Live Streaming</option>
+                            <option value="ID Card Printing" data-en="ID Card Printing" data-hi="आईडी कार्ड प्रिंटिंग">ID Card Printing</option>
+                            <option value="Visiting Card Printing" data-en="Visiting Card Printing" data-hi="विजिटिंग कार्ड प्रिंटिंग">Visiting Card Printing</option>
+                            <option value="Flex & Banner Printing" data-en="Flex & Banner Printing" data-hi="फ्लेक्स और बैनर प्रिंटिंग">Flex & Banner Printing</option>
+                            <option value="Custom Printing" data-en="Custom Printing" data-hi="कस्टम प्रिंटिंग">Custom Printing</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Your Message</label>
+                        <label data-en="Your Message" data-hi="आपका संदेश">Your Message</label>
                         <textarea name="message" rows="4" placeholder="Write your message here..."></textarea>
                     </div>
-                    <button type="submit" class="btn-submit">Send Message 📨</button>
+                    <button type="submit" class="btn-submit" data-en="Send Message 📨" data-hi="संदेश भेजें 📨">Send Message 📨</button>
                 </form>
             </div>
 
@@ -115,13 +132,36 @@
     </main>
 
     <footer>
-        <p>© 2025 R.K. STUDIO. All rights reserved.</p>
+        <p data-en="© 2025 R.K. Studio. All rights reserved." data-hi="© 2025 आर.के. स्टूडियो। सर्वाधिकार सुरक्षित।">© 2025 R.K. Studio. All rights reserved.</p>
     </footer>
+
     <!-- WhatsApp Floating Button -->
     <a href="https://wa.me/918000583737" target="_blank" class="whatsapp-float">
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
     </a>
 
-</body>
+    <script>
+        function setLang(lang) {
+            localStorage.setItem('rk_lang', lang);
+            applyLang(lang);
+        }
+
+        function applyLang(lang) {
+            document.querySelectorAll('[data-en]').forEach(el => {
+                if (el.tagName === 'OPTION') {
+                    el.textContent = lang === 'hi' ? el.getAttribute('data-hi') : el.getAttribute('data-en');
+                } else {
+                    el.textContent = lang === 'hi' ? el.getAttribute('data-hi') : el.getAttribute('data-en');
+                }
+            });
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            document.getElementById('btn-hi').classList.toggle('active', lang === 'hi');
+            document.documentElement.lang = lang;
+        }
+
+        const savedLang = localStorage.getItem('rk_lang') || 'en';
+        applyLang(savedLang);
+    </script>
+
 </body>
 </html>

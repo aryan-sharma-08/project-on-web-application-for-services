@@ -13,31 +13,45 @@
             <img src="{{ url_for('static', filename='logo.png') }}" alt="R.K. Studio Logo" class="nav-logo">
         </div>
         <ul class="nav-links">
-            <li><a href="/">Home</a></li>
-            <li><a href="/wedding">Wedding & Events</a></li>
-            <li><a href="/printing">Printing Services</a></li>
-            <li><a href="/gallery">Gallery</a></li>
-            <li><a href="/contact">Contact Us</a></li>
+            <li><a href="/" data-en="Home" data-hi="होम">Home</a></li>
+            <li><a href="/wedding" data-en="Wedding & Events" data-hi="शादी और इवेंट">Wedding & Events</a></li>
+            <li><a href="/printing" data-en="Printing Services" data-hi="प्रिंटिंग सेवाएं">Printing Services</a></li>
+            <li><a href="/gallery" data-en="Gallery" data-hi="गैलरी">Gallery</a></li>
+            <li><a href="/contact" data-en="Contact Us" data-hi="संपर्क करें">Contact Us</a></li>
         </ul>
+        <div class="nav-auth">
+    {% if current_user.is_authenticated %}
+        <span class="nav-user">👤 {{ current_user.name }}</span>
+        <a href="/myorders" class="nav-btn-login" data-en="My Orders" data-hi="मेरे ऑर्डर">My Orders</a>
+        <a href="/logout" class="nav-btn-logout" data-en="Logout" data-hi="लॉगआउट">Logout</a>
+    {% else %}
+        <a href="/login" class="nav-btn-login" data-en="Login" data-hi="लॉगिन">Login</a>
+        <a href="/register" class="nav-btn-register" data-en="Register" data-hi="रजिस्टर">Register</a>
+    {% endif %}
+</div>
+        <div class="lang-toggle">
+            <button onclick="setLang('en')" id="btn-en" class="lang-btn active">EN</button>
+            <span>|</span>
+            <button onclick="setLang('hi')" id="btn-hi" class="lang-btn">हिं</button>
+        </div>
     </nav>
 
     <header>
-        <h1>🎬 Book Event Services</h1>
-        <p>Choose your services and let R.K. Studio make your event unforgettable</p>
+        <h1 data-en="🎬 Book Event Services" data-hi="🎬 इवेंट सेवाएं बुक करें">🎬 Book Event Services</h1>
+        <p data-en="Choose your services and let R.K. Studio make your event unforgettable" data-hi="अपनी सेवाएं चुनें और आर.के. स्टूडियो को आपका इवेंट यादगार बनाने दें">Choose your services and let R.K. Studio make your event unforgettable</p>
     </header>
 
     <main>
         <div class="booking-wrapper">
 
             {% if success %}
-            <!-- Success Message -->
             <div class="order-success">
                 <div class="success-icon">🎉</div>
-                <h2>Booking Request Submitted!</h2>
-                <p>Thank you for choosing <strong>R.K. Studio</strong>! We have received your booking request.</p>
-                <p>Our team will contact you soon on your provided phone number to confirm availability and discuss further details.</p>
-                <p class="success-note">📞 Expected call within <strong>24 hours</strong>.</p>
-                <a href="/wedding" class="btn">← Back to Wedding & Events</a>
+                <h2 data-en="Booking Request Submitted!" data-hi="बुकिंग अनुरोध सबमिट हो गया!">Booking Request Submitted!</h2>
+                <p data-en="Thank you for choosing R.K. Studio! We have received your booking request." data-hi="आर.के. स्टूडियो को चुनने के लिए धन्यवाद! हमें आपका बुकिंग अनुरोध मिल गया है।">Thank you for choosing <strong>R.K. Studio</strong>! We have received your booking request.</p>
+                <p data-en="Our team will contact you soon on your provided phone number to confirm availability and discuss further details." data-hi="हमारी टीम जल्द ही आपके दिए गए फोन नंबर पर उपलब्धता की पुष्टि करने और आगे की जानकारी के लिए संपर्क करेगी।">Our team will contact you soon on your provided phone number to confirm availability and discuss further details.</p>
+                <p class="success-note" data-en="📞 Expected call within 24 hours." data-hi="📞 24 घंटे के भीतर कॉल की उम्मीद है।">📞 Expected call within <strong>24 hours</strong>.</p>
+                <a href="/wedding" class="btn" data-en="← Back to Wedding & Events" data-hi="← शादी और इवेंट पर वापस जाएं">← Back to Wedding & Events</a>
             </div>
 
             {% else %}
@@ -47,56 +61,56 @@
                 <div class="booking-section">
                     <div class="step-header">
                         <span class="step-number">1</span>
-                        <h2>Choose a Package <span class="optional">(Optional)</span></h2>
+                        <h2 data-en="Choose a Package" data-hi="पैकेज चुनें">Choose a Package <span class="optional" data-en="(Optional)" data-hi="(वैकल्पिक)">(Optional)</span></h2>
                     </div>
-                    <p class="step-desc">Select a ready-made package that suits your event</p>
+                    <p class="step-desc" data-en="Select a ready-made package that suits your event" data-hi="अपने इवेंट के लिए एक तैयार पैकेज चुनें">Select a ready-made package that suits your event</p>
 
                     <div class="packages-grid">
 
                         <div class="package-card" onclick="selectPackage(this, 'Essentials')">
                             <input type="radio" name="package" value="Essentials" hidden>
                             <div class="package-icon">🌟</div>
-                            <h3>Essentials</h3>
+                            <h3 data-en="Essentials" data-hi="एसेंशियल">Essentials</h3>
                             <ul>
-                                <li>✅ Photography</li>
-                                <li>✅ Videography</li>
+                                <li data-en="✅ Photography" data-hi="✅ फोटोग्राफी">✅ Photography</li>
+                                <li data-en="✅ Videography" data-hi="✅ वीडियोग्राफी">✅ Videography</li>
                             </ul>
                         </div>
 
                         <div class="package-card" onclick="selectPackage(this, 'Classic')">
                             <input type="radio" name="package" value="Classic" hidden>
                             <div class="package-icon">💫</div>
-                            <h3>Classic</h3>
+                            <h3 data-en="Classic" data-hi="क्लासिक">Classic</h3>
                             <ul>
-                                <li>✅ Photography</li>
-                                <li>✅ Videography</li>
-                                <li>✅ Drone Coverage</li>
-                                <li>✅ Video Editing</li>
+                                <li data-en="✅ Photography" data-hi="✅ फोटोग्राफी">✅ Photography</li>
+                                <li data-en="✅ Videography" data-hi="✅ वीडियोग्राफी">✅ Videography</li>
+                                <li data-en="✅ Drone Coverage" data-hi="✅ ड्रोन कवरेज">✅ Drone Coverage</li>
+                                <li data-en="✅ Video Editing" data-hi="✅ वीडियो एडिटिंग">✅ Video Editing</li>
                             </ul>
                         </div>
 
                         <div class="package-card" onclick="selectPackage(this, 'Elite')">
                             <input type="radio" name="package" value="Elite" hidden>
                             <div class="package-icon">👑</div>
-                            <h3>Elite</h3>
+                            <h3 data-en="Elite" data-hi="एलीट">Elite</h3>
                             <ul>
-                                <li>✅ Photography</li>
-                                <li>✅ Videography</li>
-                                <li>✅ Drone Coverage</li>
-                                <li>✅ Crane / Jimmy Jib</li>
-                                <li>✅ LED Wall / Plasma</li>
-                                <li>✅ Live Event Production</li>
-                                <li>✅ Video Editing</li>
+                                <li data-en="✅ Photography" data-hi="✅ फोटोग्राफी">✅ Photography</li>
+                                <li data-en="✅ Videography" data-hi="✅ वीडियोग्राफी">✅ Videography</li>
+                                <li data-en="✅ Drone Coverage" data-hi="✅ ड्रोन कवरेज">✅ Drone Coverage</li>
+                                <li data-en="✅ Crane / Jimmy Jib" data-hi="✅ क्रेन / जिमी जिब">✅ Crane / Jimmy Jib</li>
+                                <li data-en="✅ LED Wall / Plasma" data-hi="✅ एलईडी वॉल / प्लाज़्मा">✅ LED Wall / Plasma</li>
+                                <li data-en="✅ Live Event Production" data-hi="✅ लाइव इवेंट प्रोडक्शन">✅ Live Event Production</li>
+                                <li data-en="✅ Video Editing" data-hi="✅ वीडियो एडिटिंग">✅ Video Editing</li>
                             </ul>
                         </div>
 
                         <div class="package-card" onclick="selectPackage(this, 'Live Coverage')">
                             <input type="radio" name="package" value="Live Coverage" hidden>
                             <div class="package-icon">📡</div>
-                            <h3>Live Coverage</h3>
+                            <h3 data-en="Live Coverage" data-hi="लाइव कवरेज">Live Coverage</h3>
                             <ul>
-                                <li>✅ Live Streaming</li>
-                                <li>✅ Live Event Production</li>
+                                <li data-en="✅ Live Streaming" data-hi="✅ लाइव स्ट्रीमिंग">✅ Live Streaming</li>
+                                <li data-en="✅ Live Event Production" data-hi="✅ लाइव इवेंट प्रोडक्शन">✅ Live Event Production</li>
                             </ul>
                         </div>
 
@@ -107,51 +121,51 @@
                 <div class="booking-section">
                     <div class="step-header">
                         <span class="step-number">2</span>
-                        <h2>Add Extra Services <span class="optional">(Optional)</span></h2>
+                        <h2 data-en="Add Extra Services" data-hi="अतिरिक्त सेवाएं जोड़ें">Add Extra Services <span class="optional" data-en="(Optional)" data-hi="(वैकल्पिक)">(Optional)</span></h2>
                     </div>
-                    <p class="step-desc">Add any extra services on top of your package</p>
+                    <p class="step-desc" data-en="Add any extra services on top of your package" data-hi="अपने पैकेज के ऊपर कोई भी अतिरिक्त सेवाएं जोड़ें">Add any extra services on top of your package</p>
 
                     <div class="addons-grid">
                         <label class="addon-item">
                             <input type="checkbox" name="addons" value="Crane / Jimmy Jib Camera">
                             <span class="addon-box">
                                 <span class="addon-icon">🎦</span>
-                                <span>Crane / Jimmy Jib Camera</span>
+                                <span data-en="Crane / Jimmy Jib Camera" data-hi="क्रेन / जिमी जिब कैमरा">Crane / Jimmy Jib Camera</span>
                             </span>
                         </label>
                         <label class="addon-item">
                             <input type="checkbox" name="addons" value="LED Wall / Plasma Screen">
                             <span class="addon-box">
                                 <span class="addon-icon">📺</span>
-                                <span>LED Wall / Plasma Screen</span>
+                                <span data-en="LED Wall / Plasma Screen" data-hi="एलईडी वॉल / प्लाज़्मा स्क्रीन">LED Wall / Plasma Screen</span>
                             </span>
                         </label>
                         <label class="addon-item">
                             <input type="checkbox" name="addons" value="Live Streaming">
                             <span class="addon-box">
                                 <span class="addon-icon">📡</span>
-                                <span>Live Streaming</span>
+                                <span data-en="Live Streaming" data-hi="लाइव स्ट्रीमिंग">Live Streaming</span>
                             </span>
                         </label>
                         <label class="addon-item">
                             <input type="checkbox" name="addons" value="Corporate Event Coverage">
                             <span class="addon-box">
                                 <span class="addon-icon">🏢</span>
-                                <span>Corporate Event Coverage</span>
+                                <span data-en="Corporate Event Coverage" data-hi="कॉर्पोरेट इवेंट कवरेज">Corporate Event Coverage</span>
                             </span>
                         </label>
                         <label class="addon-item">
                             <input type="checkbox" name="addons" value="Wedding Coverage">
                             <span class="addon-box">
                                 <span class="addon-icon">💍</span>
-                                <span>Wedding Coverage</span>
+                                <span data-en="Wedding Coverage" data-hi="वेडिंग कवरेज">Wedding Coverage</span>
                             </span>
                         </label>
                         <label class="addon-item">
                             <input type="checkbox" name="addons" value="Video Editing & Post Production">
                             <span class="addon-box">
                                 <span class="addon-icon">🎞️</span>
-                                <span>Video Editing & Post Production</span>
+                                <span data-en="Video Editing & Post Production" data-hi="वीडियो एडिटिंग और पोस्ट प्रोडक्शन">Video Editing & Post Production</span>
                             </span>
                         </label>
                     </div>
@@ -161,79 +175,79 @@
                 <div class="booking-section">
                     <div class="step-header">
                         <span class="step-number">3</span>
-                        <h2>Build Your Own <span class="optional">(Optional)</span></h2>
+                        <h2 data-en="Build Your Own" data-hi="अपना खुद बनाएं">Build Your Own <span class="optional" data-en="(Optional)" data-hi="(वैकल्पिक)">(Optional)</span></h2>
                     </div>
-                    <p class="step-desc">Don't see what you need? Select individual services below</p>
+                    <p class="step-desc" data-en="Don't see what you need? Select individual services below" data-hi="जो चाहिए वो नहीं मिला? नीचे से अलग-अलग सेवाएं चुनें">Don't see what you need? Select individual services below</p>
 
                     <div class="addons-grid">
                         <label class="addon-item">
                             <input type="checkbox" name="custom" value="Photography">
                             <span class="addon-box">
                                 <span class="addon-icon">📷</span>
-                                <span>Photography</span>
+                                <span data-en="Photography" data-hi="फोटोग्राफी">Photography</span>
                             </span>
                         </label>
                         <label class="addon-item">
                             <input type="checkbox" name="custom" value="Videography">
                             <span class="addon-box">
                                 <span class="addon-icon">🎥</span>
-                                <span>Videography</span>
+                                <span data-en="Videography" data-hi="वीडियोग्राफी">Videography</span>
                             </span>
                         </label>
                         <label class="addon-item">
                             <input type="checkbox" name="custom" value="Drone Coverage">
                             <span class="addon-box">
                                 <span class="addon-icon">🚁</span>
-                                <span>Drone Coverage</span>
+                                <span data-en="Drone Coverage" data-hi="ड्रोन कवरेज">Drone Coverage</span>
                             </span>
                         </label>
                         <label class="addon-item">
                             <input type="checkbox" name="custom" value="Crane / Jimmy Jib Camera">
                             <span class="addon-box">
                                 <span class="addon-icon">🎦</span>
-                                <span>Crane / Jimmy Jib Camera</span>
+                                <span data-en="Crane / Jimmy Jib Camera" data-hi="क्रेन / जिमी जिब कैमरा">Crane / Jimmy Jib Camera</span>
                             </span>
                         </label>
                         <label class="addon-item">
                             <input type="checkbox" name="custom" value="LED Wall / Plasma Screen">
                             <span class="addon-box">
                                 <span class="addon-icon">📺</span>
-                                <span>LED Wall / Plasma Screen</span>
+                                <span data-en="LED Wall / Plasma Screen" data-hi="एलईडी वॉल / प्लाज़्मा स्क्रीन">LED Wall / Plasma Screen</span>
                             </span>
                         </label>
                         <label class="addon-item">
                             <input type="checkbox" name="custom" value="Live Event Production">
                             <span class="addon-box">
                                 <span class="addon-icon">🎙️</span>
-                                <span>Live Event Production</span>
+                                <span data-en="Live Event Production" data-hi="लाइव इवेंट प्रोडक्शन">Live Event Production</span>
                             </span>
                         </label>
                         <label class="addon-item">
                             <input type="checkbox" name="custom" value="Wedding Coverage">
                             <span class="addon-box">
                                 <span class="addon-icon">💍</span>
-                                <span>Wedding Coverage</span>
+                                <span data-en="Wedding Coverage" data-hi="वेडिंग कवरेज">Wedding Coverage</span>
                             </span>
                         </label>
                         <label class="addon-item">
                             <input type="checkbox" name="custom" value="Corporate Event Coverage">
                             <span class="addon-box">
                                 <span class="addon-icon">🏢</span>
-                                <span>Corporate Event Coverage</span>
+                                <span data-en="Corporate Event Coverage" data-hi="कॉर्पोरेट इवेंट कवरेज">Corporate Event Coverage</span>
                             </span>
                         </label>
                         <label class="addon-item">
                             <input type="checkbox" name="custom" value="Live Streaming">
                             <span class="addon-box">
                                 <span class="addon-icon">📡</span>
-                                <span>Live Streaming</span>
+                                <span data-en="Live Streaming" data-hi="लाइव स्ट्रीमिंग">Live Streaming</span>
                             </span>
                         </label>
                         <label class="addon-item">
                             <input type="checkbox" name="custom" value="Video Editing & Post Production">
                             <span class="addon-box">
                                 <span class="addon-icon">🎞️</span>
-                                <span>Video Editing & Post Production</span>
+                                <span data-en="Video Editing & Post Production" data-hi="वीडियो एडिटिंग और पोस्ट प्रोडक्शन">Video Editing & Post Production</span>
                             </span>
                         </label>
                     </div>
@@ -243,59 +257,59 @@
                 <div class="booking-section">
                     <div class="step-header">
                         <span class="step-number">4</span>
-                        <h2>Your Event Details</h2>
+                        <h2 data-en="Your Event Details" data-hi="आपके इवेंट की जानकारी">Your Event Details</h2>
                     </div>
-                    <p class="step-desc">Tell us about your event so we can prepare accordingly</p>
+                    <p class="step-desc" data-en="Tell us about your event so we can prepare accordingly" data-hi="हमें अपने इवेंट के बारे में बताएं ताकि हम तैयारी कर सकें">Tell us about your event so we can prepare accordingly</p>
 
                     <div class="booking-form">
                         <div class="form-row">
                             <div class="form-group">
-                                <label>👤 Full Name</label>
+                                <label data-en="👤 Full Name" data-hi="👤 पूरा नाम">👤 Full Name</label>
                                 <input type="text" name="name" placeholder="Enter your full name" required>
                             </div>
                             <div class="form-group">
-                                <label>📞 Phone Number</label>
+                                <label data-en="📞 Phone Number" data-hi="📞 फोन नंबर">📞 Phone Number</label>
                                 <input type="text" name="phone" placeholder="Enter your phone number" required>
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label>📅 Event Date</label>
+                                <label data-en="📅 Event Date" data-hi="📅 इवेंट की तारीख">📅 Event Date</label>
                                 <input type="date" name="event_date" required>
                             </div>
                             <div class="form-group">
-                                <label>🎉 Event Type</label>
+                                <label data-en="🎉 Event Type" data-hi="🎉 इवेंट का प्रकार">🎉 Event Type</label>
                                 <select name="event_type">
-                                    <option value="">-- Select Event Type --</option>
-                                    <option>Wedding</option>
-                                    <option>Corporate Event</option>
-                                    <option>Birthday Party</option>
-                                    <option>Engagement</option>
-                                    <option>Conference / Seminar</option>
-                                    <option>Concert / Show</option>
-                                    <option>Other</option>
+                                    <option value="" data-en="-- Select Event Type --" data-hi="-- इवेंट प्रकार चुनें --">-- Select Event Type --</option>
+                                    <option value="Wedding" data-en="Wedding" data-hi="शादी">Wedding</option>
+                                    <option value="Corporate Event" data-en="Corporate Event" data-hi="कॉर्पोरेट इवेंट">Corporate Event</option>
+                                    <option value="Birthday Party" data-en="Birthday Party" data-hi="जन्मदिन पार्टी">Birthday Party</option>
+                                    <option value="Engagement" data-en="Engagement" data-hi="सगाई">Engagement</option>
+                                    <option value="Conference / Seminar" data-en="Conference / Seminar" data-hi="सम्मेलन / सेमिनार">Conference / Seminar</option>
+                                    <option value="Concert / Show" data-en="Concert / Show" data-hi="कॉन्सर्ट / शो">Concert / Show</option>
+                                    <option value="Other" data-en="Other" data-hi="अन्य">Other</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label>📍 Event Location / Venue</label>
+                                <label data-en="📍 Event Location / Venue" data-hi="📍 इवेंट स्थान / वेन्यू">📍 Event Location / Venue</label>
                                 <input type="text" name="venue" placeholder="Enter event venue or location" required>
                             </div>
                             <div class="form-group">
-                                <label>👥 Expected Guests <span class="optional">(Optional)</span></label>
+                                <label data-en="👥 Expected Guests (Optional)" data-hi="👥 अनुमानित मेहमान (वैकल्पिक)">👥 Expected Guests <span class="optional">(Optional)</span></label>
                                 <input type="number" name="guests" placeholder="e.g. 200" min="1">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label>📝 Special Requirements</label>
+                            <label data-en="📝 Special Requirements" data-hi="📝 विशेष आवश्यकताएं">📝 Special Requirements</label>
                             <textarea name="requirements" rows="3" placeholder="Any special requirements or additional information..."></textarea>
                         </div>
 
-                        <button type="submit" class="btn-submit">Submit Booking Request 🎬</button>
+                        <button type="submit" class="btn-submit" data-en="Submit Booking Request 🎬" data-hi="बुकिंग अनुरोध सबमिट करें 🎬">Submit Booking Request 🎬</button>
                     </div>
                 </div>
 
@@ -306,7 +320,7 @@
     </main>
 
     <footer>
-        <p>© 2025 R.K. Studio. All rights reserved.</p>
+        <p data-en="© 2025 R.K. Studio. All rights reserved." data-hi="© 2025 आर.के. स्टूडियो। सर्वाधिकार सुरक्षित।">© 2025 R.K. Studio. All rights reserved.</p>
     </footer>
 
     <!-- WhatsApp Floating Button -->
@@ -316,9 +330,10 @@
 
     <script>
         function selectPackage(card, packageName) {
-            // Remove active from all cards
-            document.querySelectorAll('.package-card').forEach(c => c.classList.remove('active'));
-            // Toggle active on clicked card
+            document.querySelectorAll('.package-card').forEach(c => {
+                c.classList.remove('active');
+                c.classList.remove('was-active');
+            });
             if (card.classList.contains('was-active')) {
                 card.classList.remove('was-active');
                 card.querySelector('input').checked = false;
@@ -326,11 +341,25 @@
                 card.classList.add('active');
                 card.classList.add('was-active');
                 card.querySelector('input').checked = true;
-                document.querySelectorAll('.package-card').forEach(c => {
-                    if (c !== card) c.classList.remove('was-active');
-                });
             }
         }
+
+        function setLang(lang) {
+            localStorage.setItem('rk_lang', lang);
+            applyLang(lang);
+        }
+
+        function applyLang(lang) {
+            document.querySelectorAll('[data-en]').forEach(el => {
+                el.textContent = lang === 'hi' ? el.getAttribute('data-hi') : el.getAttribute('data-en');
+            });
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            document.getElementById('btn-hi').classList.toggle('active', lang === 'hi');
+            document.documentElement.lang = lang;
+        }
+
+        const savedLang = localStorage.getItem('rk_lang') || 'en';
+        applyLang(savedLang);
     </script>
 
 </body>

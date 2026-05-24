@@ -13,12 +13,28 @@
             <img src="{{ url_for('static', filename='logo.png') }}" alt="R.K. Studio Logo" class="nav-logo">
         </div>
         <ul class="nav-links">
-            <li><a href="/">Home</a></li>
-            <li><a href="/wedding">Wedding & Events</a></li>
-            <li><a href="/printing">Printing Services</a></li>
-            <li><a href="/gallery">Gallery</a></li>
-            <li><a href="/contact">Contact Us</a></li>
+            <li><a href="/" data-en="Home" data-hi="होम">Home</a></li>
+            <li><a href="/wedding" data-en="Wedding & Events" data-hi="शादी और इवेंट">Wedding & Events</a></li>
+            <li><a href="/printing" data-en="Printing Services" data-hi="प्रिंटिंग सेवाएं">Printing Services</a></li>
+            <li><a href="/gallery" data-en="Gallery" data-hi="गैलरी">Gallery</a></li>
+            <li><a href="/contact" data-en="Contact Us" data-hi="संपर्क करें">Contact Us</a></li>
         </ul>
+        <!-- Language Toggle -->
+        <div class="nav-auth">
+    {% if current_user.is_authenticated %}
+        <span class="nav-user">👤 {{ current_user.name }}</span>
+        <a href="/myorders" class="nav-btn-login" data-en="My Orders" data-hi="मेरे ऑर्डर">My Orders</a>
+        <a href="/logout" class="nav-btn-logout" data-en="Logout" data-hi="लॉगआउट">Logout</a>
+    {% else %}
+        <a href="/login" class="nav-btn-login" data-en="Login" data-hi="लॉगिन">Login</a>
+        <a href="/register" class="nav-btn-register" data-en="Register" data-hi="रजिस्टर">Register</a>
+    {% endif %}
+</div>
+        <div class="lang-toggle">
+            <button onclick="setLang('en')" id="btn-en" class="lang-btn active">EN</button>
+            <span>|</span>
+            <button onclick="setLang('hi')" id="btn-hi" class="lang-btn">हिं</button>
+        </div>
     </nav>
 
     <!-- Sliding Banner -->
@@ -27,43 +43,41 @@
 
             <div class="slide active" style="background-image: url('https://picsum.photos/seed/banner1/1400/600')">
                 <div class="slide-content">
-                    <h2>Capture Every Moment</h2>
-                    <p>Professional Photography & Videography for your special day</p>
-                    <a href="/wedding" class="btn">Explore Wedding Services</a>
+                    <h2 data-en="Capture Every Moment" data-hi="हर पल को कैद करें">Capture Every Moment</h2>
+                    <p data-en="Professional Photography & Videography for your special day" data-hi="आपके खास दिन के लिए पेशेवर फोटोग्राफी और वीडियोग्राफी">Professional Photography & Videography for your special day</p>
+                    <a href="/wedding" class="btn" data-en="Explore Wedding Services" data-hi="शादी सेवाएं देखें">Explore Wedding Services</a>
                 </div>
             </div>
 
             <div class="slide" style="background-image: url('https://picsum.photos/seed/banner2/1400/600')">
                 <div class="slide-content">
-                    <h2>Fly Above the Rest</h2>
-                    <p>Stunning Drone Coverage & Aerial Cinematography</p>
-                    <a href="/wedding" class="btn">View Our Work</a>
+                    <h2 data-en="Fly Above the Rest" data-hi="सबसे ऊपर उड़ें">Fly Above the Rest</h2>
+                    <p data-en="Stunning Drone Coverage & Aerial Cinematography" data-hi="शानदार ड्रोन कवरेज और एरियल सिनेमेटोग्राफी">Stunning Drone Coverage & Aerial Cinematography</p>
+                    <a href="/wedding" class="btn" data-en="View Our Work" data-hi="हमारा काम देखें">View Our Work</a>
                 </div>
             </div>
 
             <div class="slide" style="background-image: url('https://picsum.photos/seed/banner3/1400/600')">
                 <div class="slide-content">
-                    <h2>Print Your Identity</h2>
-                    <p>High Quality ID Cards, Banners, Brochures & More</p>
-                    <a href="/printing" class="btn">Explore Printing Services</a>
+                    <h2 data-en="Print Your Identity" data-hi="अपनी पहचान छपवाएं">Print Your Identity</h2>
+                    <p data-en="High Quality ID Cards, Banners, Brochures & More" data-hi="उच्च गुणवत्ता के आईडी कार्ड, बैनर, ब्रोशर और बहुत कुछ">High Quality ID Cards, Banners, Brochures & More</p>
+                    <a href="/printing" class="btn" data-en="Explore Printing Services" data-hi="प्रिंटिंग सेवाएं देखें">Explore Printing Services</a>
                 </div>
             </div>
 
             <div class="slide" style="background-image: url('https://picsum.photos/seed/banner4/1400/600')">
                 <div class="slide-content">
-                    <h2>Live Events Done Right</h2>
-                    <p>Full Event Production & Live Streaming Services</p>
-                    <a href="/contact" class="btn">Get In Touch</a>
+                    <h2 data-en="Live Events Done Right" data-hi="लाइव इवेंट बेहतरीन तरीके से">Live Events Done Right</h2>
+                    <p data-en="Full Event Production & Live Streaming Services" data-hi="पूर्ण इवेंट प्रोडक्शन और लाइव स्ट्रीमिंग सेवाएं">Full Event Production & Live Streaming Services</p>
+                    <a href="/contact" class="btn" data-en="Get In Touch" data-hi="संपर्क करें">Get In Touch</a>
                 </div>
             </div>
 
         </div>
 
-        <!-- Arrows -->
         <button class="slider-btn prev" onclick="changeSlide(-1)">&#10094;</button>
         <button class="slider-btn next" onclick="changeSlide(1)">&#10095;</button>
 
-        <!-- Dots -->
         <div class="slider-dots">
             <span class="dot active" onclick="goToSlide(0)"></span>
             <span class="dot" onclick="goToSlide(1)"></span>
@@ -74,8 +88,8 @@
 
     <!-- Services Section -->
     <section class="section-title">
-        <h2>Our Services</h2>
-        <p>Everything you need for your events and printing needs</p>
+        <h2 data-en="Our Services" data-hi="हमारी सेवाएं">Our Services</h2>
+        <p data-en="Everything you need for your events and printing needs" data-hi="आपके इवेंट और प्रिंटिंग जरूरतों के लिए सब कुछ">Everything you need for your events and printing needs</p>
     </section>
 
     <main>
@@ -83,23 +97,23 @@
 
             <div class="service-card">
                 <div class="icon">🎬</div>
-                <h2>Wedding & Event Services</h2>
-                <p>Photography, Videography, Drone Coverage and much more for your special moments.</p>
-                <a href="/wedding" class="btn">View Services</a>
+                <h2 data-en="Wedding & Event Services" data-hi="शादी और इवेंट सेवाएं">Wedding & Event Services</h2>
+                <p data-en="Photography, Videography, Drone Coverage and much more for your special moments." data-hi="आपके खास पलों के लिए फोटोग्राफी, वीडियोग्राफी, ड्रोन कवरेज और बहुत कुछ।">Photography, Videography, Drone Coverage and much more for your special moments.</p>
+                <a href="/wedding" class="btn" data-en="View Services" data-hi="सेवाएं देखें">View Services</a>
             </div>
 
             <div class="service-card">
                 <div class="icon">🖨️</div>
-                <h2>Printing Services</h2>
-                <p>ID Cards, Banners, Brochures, Visiting Cards and all your printing needs.</p>
-                <a href="/printing" class="btn">View Services</a>
+                <h2 data-en="Printing Services" data-hi="प्रिंटिंग सेवाएं">Printing Services</h2>
+                <p data-en="ID Cards, Banners, Brochures, Visiting Cards and all your printing needs." data-hi="आईडी कार्ड, बैनर, ब्रोशर, विजिटिंग कार्ड और आपकी सभी प्रिंटिंग जरूरतें।">ID Cards, Banners, Brochures, Visiting Cards and all your printing needs.</p>
+                <a href="/printing" class="btn" data-en="View Services" data-hi="सेवाएं देखें">View Services</a>
             </div>
 
         </div>
     </main>
 
     <footer>
-        <p>© 2025 R.K. Studio. All rights reserved.</p>
+        <p data-en="© 2025 R.K. Studio. All rights reserved." data-hi="© 2025 आर.के. स्टूडियो। सर्वाधिकार सुरक्षित।">© 2025 R.K. Studio. All rights reserved.</p>
     </footer>
 
     <!-- WhatsApp Floating Button -->
@@ -108,6 +122,7 @@
     </a>
 
     <script>
+        // ── Slider ──
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
         const dots = document.querySelectorAll('.dot');
@@ -120,16 +135,28 @@
             dots[currentSlide].classList.add('active');
         }
 
-        function changeSlide(direction) {
-            showSlide(currentSlide + direction);
-        }
-
-        function goToSlide(index) {
-            showSlide(index);
-        }
-
-        // Auto slide every 5 seconds
+        function changeSlide(direction) { showSlide(currentSlide + direction); }
+        function goToSlide(index) { showSlide(index); }
         setInterval(() => changeSlide(1), 5000);
+
+        // ── Language Toggle ──
+        function setLang(lang) {
+            localStorage.setItem('rk_lang', lang);
+            applyLang(lang);
+        }
+
+        function applyLang(lang) {
+            document.querySelectorAll('[data-en]').forEach(el => {
+                el.textContent = lang === 'hi' ? el.getAttribute('data-hi') : el.getAttribute('data-en');
+            });
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            document.getElementById('btn-hi').classList.toggle('active', lang === 'hi');
+            document.documentElement.lang = lang;
+        }
+
+        // Apply saved language on page load
+        const savedLang = localStorage.getItem('rk_lang') || 'en';
+        applyLang(savedLang);
     </script>
 
 </body>

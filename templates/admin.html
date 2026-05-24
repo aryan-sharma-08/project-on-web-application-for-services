@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-
+    <p style="color:red;">logged_in = {{ logged_in }}</p>
     <nav>
         <div class="nav-brand">
             <img src="{{ url_for('static', filename='logo.png') }}" alt="R.K. Studio Logo" class="nav-logo">
@@ -17,13 +17,23 @@
             <li><a href="/wedding">Wedding & Events</a></li>
             <li><a href="/printing">Printing Services</a></li>
             <li><a href="/contact">Contact Us</a></li>
-            <li><a href="/gallery">Gallery</a></li>
         </ul>
+        <div class="nav-auth">
+            {% if logged_in %}
+                <span class="nav-user">👨‍💼 Admin</span>
+                <a href="/admin/logout" class="nav-btn-logout">🚪 Logout</a>
+            {% else %}
+                <span class="nav-user">🔐 Admin Panel</span>
+            {% endif %}
+        </div>
     </nav>
 
     <header>
         <h1>🔐 Admin Panel</h1>
-        <p>View all customer messages</p>
+        <p>View all customer messages, orders and bookings</p>
+        {% if logged_in %}
+        <a href="/admin/logout" class="btn-back">🚪 Logout</a>
+        {% endif %}
     </header>
 
     <main>
@@ -46,10 +56,49 @@
             </div>
 
             {% else %}
-            <!-- Messages Table -->
-            <div class="admin-messages">
-                <h2>📨 Customer Messages ({{ messages|length }})</h2>
 
+            <!-- ── Registered Users ── -->
+            <div class="admin-messages">
+                <h2>👥 Registered Users ({{ users|length }})</h2>
+                {% if users|length == 0 %}
+                <p class="no-messages">No registered users yet!</p>
+                {% else %}
+                <table class="messages-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Verified</th>
+                            <th>Registered On</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.phone }}</td>
+                            <td>
+                                {% if user.verified %}
+                                <span style="background:#e6f4ea; color:#2d6a4f; padding:4px 10px; border-radius:20px; font-size:0.8rem;">✅ Verified</span>
+                                {% else %}
+                                <span style="background:#fde8e8; color:#c0392b; padding:4px 10px; border-radius:20px; font-size:0.8rem;">❌ Unverified</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ user.created.strftime('%Y-%m-%d %H:%M') if user.created else 'N/A' }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
+            </div>
+
+            <!-- ── Customer Messages ── -->
+            <div class="admin-messages" style="margin-top: 50px;">
+                <h2>📨 Customer Messages ({{ messages|length }})</h2>
                 {% if messages|length == 0 %}
                 <p class="no-messages">No messages yet!</p>
                 {% else %}
@@ -69,7 +118,7 @@
                         {% for msg in messages %}
                         <tr>
                             <td>{{ loop.index }}</td>
-                            <td>{{ msg.time }}</td>
+                            <td>{{ msg.created.strftime('%Y-%m-%d %H:%M') }}</td>
                             <td>{{ msg.name }}</td>
                             <td>{{ msg.phone }}</td>
                             <td>{{ msg.email }}</td>
@@ -80,12 +129,11 @@
                     </tbody>
                 </table>
                 {% endif %}
-
             </div>
-            <!-- Orders Table -->
+
+            <!-- ── Customer Orders ── -->
             <div class="admin-messages" style="margin-top: 50px;">
                 <h2>🛒 Customer Orders ({{ orders|length }})</h2>
-
                 {% if orders|length == 0 %}
                 <p class="no-messages">No orders yet!</p>
                 {% else %}
@@ -94,6 +142,7 @@
                         <tr>
                             <th>#</th>
                             <th>Date & Time</th>
+                            <th>Email</th>
                             <th>Service</th>
                             <th>Name</th>
                             <th>Phone</th>
@@ -102,13 +151,15 @@
                             <th>Design</th>
                             <th>Address</th>
                             <th>Instructions</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for order in orders %}
                         <tr>
                             <td>{{ loop.index }}</td>
-                            <td>{{ order.time }}</td>
+                            <td>{{ order.created.strftime('%Y-%m-%d %H:%M') }}</td>
+                            <td>{{ order.user_email }}</td>
                             <td><span class="service-badge">{{ order.service }}</span></td>
                             <td>{{ order.name }}</td>
                             <td>{{ order.phone }}</td>
@@ -117,6 +168,17 @@
                             <td>{{ order.design }}</td>
                             <td>{{ order.address }}</td>
                             <td>{{ order.instructions }}</td>
+                            <td>
+                                <form action="/admin/update_order/{{ order.id }}" method="POST">
+                                    <select name="status" onchange="this.form.submit()" class="status-select {{ order.status.lower().replace(' ', '-') }}">
+                                        <option value="Pending" {{ 'selected' if order.status == 'Pending' }}>⏳ Pending</option>
+                                        <option value="Confirmed" {{ 'selected' if order.status == 'Confirmed' }}>✅ Confirmed</option>
+                                        <option value="In Progress" {{ 'selected' if order.status == 'In Progress' }}>🔄 In Progress</option>
+                                        <option value="Completed" {{ 'selected' if order.status == 'Completed' }}>🎉 Completed</option>
+                                        <option value="Cancelled" {{ 'selected' if order.status == 'Cancelled' }}>❌ Cancelled</option>
+                                    </select>
+                                </form>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -124,10 +186,9 @@
                 {% endif %}
             </div>
 
-            <!-- Bookings Table -->
+            <!-- ── Event Bookings ── -->
             <div class="admin-messages" style="margin-top: 50px;">
                 <h2>🎬 Event Bookings ({{ bookings|length }})</h2>
-
                 {% if bookings|length == 0 %}
                 <p class="no-messages">No bookings yet!</p>
                 {% else %}
@@ -136,6 +197,7 @@
                         <tr>
                             <th>#</th>
                             <th>Date & Time</th>
+                            <th>Email</th>
                             <th>Name</th>
                             <th>Phone</th>
                             <th>Package</th>
@@ -146,13 +208,15 @@
                             <th>Venue</th>
                             <th>Guests</th>
                             <th>Requirements</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for booking in bookings %}
                         <tr>
                             <td>{{ loop.index }}</td>
-                            <td>{{ booking.time }}</td>
+                            <td>{{ booking.created.strftime('%Y-%m-%d %H:%M') }}</td>
+                            <td>{{ booking.user_email }}</td>
                             <td>{{ booking.name }}</td>
                             <td>{{ booking.phone }}</td>
                             <td><span class="service-badge">{{ booking.package }}</span></td>
@@ -163,6 +227,17 @@
                             <td>{{ booking.venue }}</td>
                             <td>{{ booking.guests }}</td>
                             <td>{{ booking.requirements }}</td>
+                            <td>
+                                <form action="/admin/update_booking/{{ booking.id }}" method="POST">
+                                    <select name="status" onchange="this.form.submit()" class="status-select {{ booking.status.lower().replace(' ', '-') }}">
+                                        <option value="Pending" {{ 'selected' if booking.status == 'Pending' }}>⏳ Pending</option>
+                                        <option value="Confirmed" {{ 'selected' if booking.status == 'Confirmed' }}>✅ Confirmed</option>
+                                        <option value="In Progress" {{ 'selected' if booking.status == 'In Progress' }}>🔄 In Progress</option>
+                                        <option value="Completed" {{ 'selected' if booking.status == 'Completed' }}>🎉 Completed</option>
+                                        <option value="Cancelled" {{ 'selected' if booking.status == 'Cancelled' }}>❌ Cancelled</option>
+                                    </select>
+                                </form>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
