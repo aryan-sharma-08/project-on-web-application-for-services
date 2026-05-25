@@ -17,11 +17,13 @@
             <li><a href="/wedding" data-en="Wedding & Events" data-hi="शादी और इवेंट">Wedding & Events</a></li>
             <li><a href="/printing" data-en="Printing Services" data-hi="प्रिंटिंग सेवाएं">Printing Services</a></li>
             <li><a href="/gallery" data-en="Gallery" data-hi="गैलरी">Gallery</a></li>
+            <li><a href="/about" data-en="About Us" data-hi="हमारे बारे में">About Us</a></li>
             <li><a href="/contact" data-en="Contact Us" data-hi="संपर्क करें">Contact Us</a></li>
         </ul>
         <div class="nav-auth">
     {% if current_user.is_authenticated %}
         <span class="nav-user">👤 {{ current_user.name }}</span>
+        <a href="/profile" class="nav-btn-login" data-en="Profile" data-hi="प्रोफ़ाइल">Profile</a>
         <a href="/myorders" class="nav-btn-login" data-en="My Orders" data-hi="मेरे ऑर्डर">My Orders</a>
         <a href="/logout" class="nav-btn-logout" data-en="Logout" data-hi="लॉगआउट">Logout</a>
     {% else %}
@@ -29,6 +31,7 @@
         <a href="/register" class="nav-btn-register" data-en="Register" data-hi="रजिस्टर">Register</a>
     {% endif %}
 </div>
+        </div>
         <div class="lang-toggle">
             <button onclick="setLang('en')" id="btn-en" class="lang-btn active">EN</button>
             <span>|</span>

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <p style="color:red;">logged_in = {{ logged_in }}</p>
+
     <nav>
         <div class="nav-brand">
             <img src="{{ url_for('static', filename='logo.png') }}" alt="R.K. Studio Logo" class="nav-logo">
@@ -31,9 +31,6 @@
     <header>
         <h1>🔐 Admin Panel</h1>
         <p>View all customer messages, orders and bookings</p>
-        {% if logged_in %}
-        <a href="/admin/logout" class="btn-back">🚪 Logout</a>
-        {% endif %}
     </header>
 
     <main>
@@ -251,7 +248,7 @@
     </main>
 
     <footer>
-        <p>© 2025 R.K. Studio. All rights reserved.</p>
+        <p>© 2000 R.K. Studio. All rights reserved.</p>
     </footer>
 
     <!-- WhatsApp Floating Button -->

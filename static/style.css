@@ -1731,3 +1731,394 @@ header h1 {
     padding: 14px 20px;
     background: #f9f6f1;
 }
+/* ── About Page ── */
+.about-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 40px;
+}
+
+.about-story {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    margin-bottom: 60px;
+    flex-wrap: wrap;
+}
+
+.about-image {
+    flex-shrink: 0;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 6px solid #c9a96e;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+}
+
+.about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.about-text h2 {
+    font-family: 'Playfair Display', serif;
+    color: #1a1a2e;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+.about-text p {
+    color: #555;
+    line-height: 1.9;
+    margin-bottom: 16px;
+    font-size: 0.95rem;
+}
+
+/* ── Stats ── */
+.about-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-bottom: 60px;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 16px;
+    padding: 36px 20px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    border-top: 4px solid #c9a96e;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-6px);
+}
+
+.stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: #c9a96e;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.stat-label {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* ── Why Choose Us ── */
+.about-why {
+    margin-bottom: 60px;
+}
+
+.about-why h2 {
+    font-family: 'Playfair Display', serif;
+    color: #1a1a2e;
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 36px;
+}
+
+.why-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.why-card {
+    background: white;
+    border-radius: 14px;
+    padding: 32px 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    transition: transform 0.3s ease;
+    text-align: center;
+}
+
+.why-card:hover {
+    transform: translateY(-6px);
+}
+
+.why-icon {
+    font-size: 2.5rem;
+    margin-bottom: 14px;
+}
+
+.why-card h3 {
+    font-family: 'Playfair Display', serif;
+    color: #1a1a2e;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.why-card p {
+    color: #666;
+    font-size: 0.88rem;
+    line-height: 1.7;
+}
+
+/* ── Services Two Col ── */
+.about-services {
+    margin-bottom: 60px;
+}
+
+.about-services h2 {
+    font-family: 'Playfair Display', serif;
+    color: #1a1a2e;
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 36px;
+}
+
+.services-two-col {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+.services-col {
+    background: white;
+    border-radius: 14px;
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    border-top: 4px solid #c9a96e;
+}
+
+.services-col h3 {
+    font-family: 'Playfair Display', serif;
+    color: #1a1a2e;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.services-col ul {
+    list-style: none;
+}
+
+.services-col ul li {
+    padding: 8px 0;
+    border-bottom: 1px solid #f5f5f5;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.services-col ul li:last-child {
+    border-bottom: none;
+}
+
+/* ── Mobile About ── */
+@media (max-width: 768px) {
+    .about-wrapper {
+        padding: 40px 20px;
+    }
+
+    .about-story {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .about-image {
+        width: 200px;
+        height: 200px;
+    }
+
+    .about-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .why-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .services-two-col {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+/* ── Profile Page ── */
+.profile-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 60px 40px;
+}
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 30px;
+    align-items: start;
+}
+
+/* ── Profile Left ── */
+.profile-left {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profile-pic-section {
+    background: white;
+    border-radius: 16px;
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+    border-top: 4px solid #c9a96e;
+}
+
+.profile-pic-container {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 16px;
+    border: 4px solid #c9a96e;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.profile-pic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-pic-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1a1a2e, #2d2d5e);
+    color: #c9a96e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+}
+
+.profile-pic-section h3 {
+    font-family: 'Playfair Display', serif;
+    color: #1a1a2e;
+    font-size: 1.2rem;
+    margin-bottom: 4px;
+}
+
+.profile-pic-section p {
+    color: #888;
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+}
+
+.profile-joined {
+    color: #aaa !important;
+    font-size: 0.8rem !important;
+    margin-bottom: 16px !important;
+}
+
+.pic-upload-label {
+    display: inline-block;
+    background-color: #f0e6d3;
+    color: #8a6a3a;
+    padding: 8px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin-top: 8px;
+}
+
+.pic-upload-label:hover {
+    background-color: #c9a96e;
+    color: white;
+}
+
+/* ── Profile Stats ── */
+.profile-stats {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+    display: flex;
+    justify-content: space-around;
+}
+
+.profile-stat {
+    text-align: center;
+}
+
+.profile-stat-number {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: #c9a96e;
+    font-weight: 700;
+}
+
+.profile-stat-label {
+    font-size: 0.78rem;
+    color: #888;
+}
+
+/* ── Profile Right ── */
+.profile-card {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+    border-top: 4px solid #c9a96e;
+}
+
+.profile-card h2 {
+    font-family: 'Playfair Display', serif;
+    color: #1a1a2e;
+    font-size: 1.3rem;
+    margin-bottom: 24px;
+}
+
+/* ── Quick Links ── */
+.quick-links {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.quick-link-btn {
+    background-color: #f9f6f1;
+    color: #1a1a2e;
+    padding: 12px 16px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 0.88rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid #f0e6d3;
+}
+
+.quick-link-btn:hover {
+    background-color: #1a1a2e;
+    color: #c9a96e;
+}
+
+/* ── Mobile Profile ── */
+@media (max-width: 768px) {
+    .profile-wrapper {
+        padding: 40px 16px;
+    }
+
+    .profile-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .quick-links {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

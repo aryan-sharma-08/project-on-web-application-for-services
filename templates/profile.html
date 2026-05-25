@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile — R.K. Studio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .profile-page-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+        .profile-page-grid {
+            display: flex;
+            flex-direction: row;
+            gap: 30px;
+            align-items: flex-start;
+        }
+        .profile-page-left {
+            width: 300px;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .profile-page-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .profile-pic-box {
+            background: white;
+            border-radius: 16px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+            border-top: 4px solid #c9a96e;
+        }
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            border: 4px solid #c9a96e;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .profile-avatar-letter {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a2e, #2d2d5e);
+            color: #c9a96e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+        .profile-pic-box h3 {
+            font-family: 'Playfair Display', serif;
+            color: #1a1a2e;
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+        }
+        .profile-pic-box p {
+            color: #888;
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+        }
+        .change-photo-btn {
+            display: inline-block;
+            background-color: #f0e6d3;
+            color: #8a6a3a;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            margin-top: 12px;
+        }
+        .change-photo-btn:hover {
+            background-color: #c9a96e;
+            color: white;
+        }
+        .profile-stats-box {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+            display: flex;
+            justify-content: space-around;
+        }
+        .profile-stat-item {
+            text-align: center;
+        }
+        .profile-stat-num {
+            display: block;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: #c9a96e;
+            font-weight: 700;
+        }
+        .profile-stat-lbl {
+            font-size: 0.78rem;
+            color: #888;
+        }
+        .profile-form-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+            border-top: 4px solid #c9a96e;
+        }
+        .profile-form-card h2 {
+            font-family: 'Playfair Display', serif;
+            color: #1a1a2e;
+            font-size: 1.3rem;
+            margin-bottom: 24px;
+        }
+        .quick-links-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        .quick-link-item {
+            background-color: #f9f6f1;
+            color: #1a1a2e;
+            padding: 12px 16px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 0.88rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid #f0e6d3;
+        }
+        .quick-link-item:hover {
+            background-color: #1a1a2e;
+            color: #c9a96e;
+        }
+        @media (max-width: 768px) {
+            .profile-page-grid {
+                flex-direction: column;
+            }
+            .profile-page-left {
+                width: 100%;
+                min-width: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-brand">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="R.K. Studio Logo" class="nav-logo">
+        </div>
+        <ul class="nav-links">
+            <li><a href="/" data-en="Home" data-hi="होम">Home</a></li>
+            <li><a href="/wedding" data-en="Wedding & Events" data-hi="शादी और इवेंट">Wedding & Events</a></li>
+            <li><a href="/printing" data-en="Printing Services" data-hi="प्रिंटिंग सेवाएं">Printing Services</a></li>
+            <li><a href="/gallery" data-en="Gallery" data-hi="गैलरी">Gallery</a></li>
+            <li><a href="/about" data-en="About Us" data-hi="हमारे बारे में">About Us</a></li>
+            <li><a href="/contact" data-en="Contact Us" data-hi="संपर्क करें">Contact Us</a></li>
+        </ul>
+        <div class="nav-auth">
+            {% if current_user.is_authenticated %}
+                <span class="nav-user">👤 {{ current_user.name }}</span>
+                <a href="/profile" class="nav-btn-login" data-en="Profile" data-hi="प्रोफ़ाइल">Profile</a>
+                <a href="/myorders" class="nav-btn-login" data-en="My Orders" data-hi="मेरे ऑर्डर">My Orders</a>
+                <a href="/logout" class="nav-btn-logout" data-en="Logout" data-hi="लॉगआउट">Logout</a>
+            {% else %}
+                <a href="/login" class="nav-btn-login" data-en="Login" data-hi="लॉगिन">Login</a>
+                <a href="/register" class="nav-btn-register" data-en="Register" data-hi="रजिस्टर">Register</a>
+            {% endif %}
+        </div>
+        <div class="lang-toggle">
+            <button onclick="setLang('en')" id="btn-en" class="lang-btn active">EN</button>
+            <span>|</span>
+            <button onclick="setLang('hi')" id="btn-hi" class="lang-btn">हिं</button>
+        </div>
+    </nav>
+
+    <header>
+        <h1 data-en="👤 My Profile" data-hi="👤 मेरी प्रोफ़ाइल">👤 My Profile</h1>
+        <p data-en="Manage your account details and preferences" data-hi="अपने अकाउंट की जानकारी और प्राथमिकताएं प्रबंधित करें">Manage your account details and preferences</p>
+    </header>
+
+    <main>
+        <div class="profile-page-wrapper">
+
+            {% if error %}
+            <div class="error-message" style="margin-bottom:20px;">❌ {{ error }}</div>
+            {% endif %}
+            {% if success %}
+            <div class="success-message" style="margin-bottom:20px;">✅ {{ success }}</div>
+            {% endif %}
+
+            <div class="profile-page-grid">
+
+                <!-- ── LEFT COLUMN ── -->
+                <div class="profile-page-left">
+
+                    <!-- Profile Picture Card -->
+                    <div class="profile-pic-box">
+                        <div class="profile-avatar">
+                            {% if current_user.profile_pic and current_user.profile_pic != 'default.png' %}
+                            <img src="{{ url_for('static', filename='profiles/' + current_user.profile_pic) }}" alt="Profile">
+                            {% else %}
+                            <div class="profile-avatar-letter">{{ current_user.name[0].upper() }}</div>
+                            {% endif %}
+                        </div>
+                        <h3>{{ current_user.name }}</h3>
+                        <p>{{ current_user.email }}</p>
+                        <p>📅 Joined {{ current_user.created.strftime('%B %Y') }}</p>
+
+                        <form action="/profile" method="POST" enctype="multipart/form-data" id="picForm">
+                            <input type="hidden" name="action" value="upload_pic">
+                            <input type="file" name="profile_pic" accept="image/*" id="picInput" style="display:none;" onchange="document.getElementById('picForm').submit()">
+                            <button type="button" onclick="document.getElementById('picInput').click()" class="change-photo-btn">
+                                📸 Change Photo
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Stats Card -->
+                    <div class="profile-stats-box">
+                        <div class="profile-stat-item">
+                            <span class="profile-stat-num">{{ current_user.id }}</span>
+                            <span class="profile-stat-lbl" data-en="Member ID" data-hi="सदस्य आईडी">Member ID</span>
+                        </div>
+                        <div class="profile-stat-item">
+                            <span class="profile-stat-num">✅</span>
+                            <span class="profile-stat-lbl" data-en="Verified" data-hi="सत्यापित">Verified</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ── RIGHT COLUMN ── -->
+                <div class="profile-page-right">
+
+                    <!-- Update Profile -->
+                    <div class="profile-form-card">
+                        <h2 data-en="✏️ Update Profile" data-hi="✏️ प्रोफ़ाइल अपडेट करें">✏️ Update Profile</h2>
+                        <form action="/profile" method="POST">
+                            <input type="hidden" name="action" value="update_info">
+                            <div class="form-group">
+                                <label data-en="👤 Full Name" data-hi="👤 पूरा नाम">👤 Full Name</label>
+                                <input type="text" name="name" value="{{ current_user.name }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label data-en="📧 Email Address" data-hi="📧 ईमेल पता">📧 Email Address</label>
+                                <input type="email" name="email" value="{{ current_user.email }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label data-en="📞 Phone Number" data-hi="📞 फोन नंबर">📞 Phone Number</label>
+                                <input type="text" name="phone" value="{{ current_user.phone }}" required>
+                            </div>
+                            <button type="submit" class="btn-submit" data-en="Save Changes ✅" data-hi="बदलाव सहेजें ✅">Save Changes ✅</button>
+                        </form>
+                    </div>
+
+                    <!-- Change Password -->
+                    <div class="profile-form-card">
+                        <h2 data-en="🔒 Change Password" data-hi="🔒 पासवर्ड बदलें">🔒 Change Password</h2>
+                        <form action="/profile" method="POST">
+                            <input type="hidden" name="action" value="change_password">
+                            <div class="form-group">
+                                <label data-en="Current Password" data-hi="वर्तमान पासवर्ड">Current Password</label>
+                                <input type="password" name="old_password" placeholder="Enter current password" required>
+                            </div>
+                            <div class="form-group">
+                                <label data-en="New Password" data-hi="नया पासवर्ड">New Password</label>
+                                <input type="password" name="new_password" placeholder="Enter new password" required>
+                            </div>
+                            <div class="form-group">
+                                <label data-en="Confirm New Password" data-hi="नया पासवर्ड पुष्टि करें">Confirm New Password</label>
+                                <input type="password" name="confirm_password" placeholder="Re-enter new password" required>
+                            </div>
+                            <button type="submit" class="btn-submit" data-en="Change Password 🔒" data-hi="पासवर्ड बदलें 🔒">Change Password 🔒</button>
+                        </form>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div class="profile-form-card">
+                        <h2 data-en="🔗 Quick Links" data-hi="🔗 त्वरित लिंक">🔗 Quick Links</h2>
+                        <div class="quick-links-grid">
+                            <a href="/myorders" class="quick-link-item">📋 <span data-en="My Orders" data-hi="मेरे ऑर्डर">My Orders</span></a>
+                            <a href="/booking" class="quick-link-item">🎬 <span data-en="Book Event" data-hi="इवेंट बुक करें">Book Event</span></a>
+                            <a href="/printing" class="quick-link-item">🖨️ <span data-en="Order Print" data-hi="प्रिंट ऑर्डर करें">Order Print</span></a>
+                            <a href="/contact" class="quick-link-item">📞 <span data-en="Contact Us" data-hi="संपर्क करें">Contact Us</span></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p data-en="© 2025 R.K. Studio. All rights reserved." data-hi="© 2025 आर.के. स्टूडियो। सर्वाधिकार सुरक्षित।">© 2025 R.K. Studio. All rights reserved.</p>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/918000583737" target="_blank" class="whatsapp-float">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+    </a>
+
+    <script>
+        function setLang(lang) {
+            localStorage.setItem('rk_lang', lang);
+            applyLang(lang);
+        }
+
+        function applyLang(lang) {
+            document.querySelectorAll('[data-en]').forEach(el => {
+                el.textContent = lang === 'hi' ? el.getAttribute('data-hi') : el.getAttribute('data-en');
+            });
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            document.getElementById('btn-hi').classList.toggle('active', lang === 'hi');
+        }
+
+        const savedLang = localStorage.getItem('rk_lang') || 'en';
+        applyLang(savedLang);
+    </script>
+
+</body>
+</html>

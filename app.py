@@ -5,25 +5,29 @@ from flask_mail import Mail, Message
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
 import datetime
+import pathlib
 import os
 import re
 import secrets
 
 # ── Load Environment Variables ──
-import pathlib
 env_path = pathlib.Path(__file__).parent / '.env'
 print(f"Loading .env from: {env_path}")
 print(f"File exists: {env_path.exists()}")
-from dotenv import load_dotenv
 load_dotenv(env_path, override=True)
 print(f"ADMIN_PASSWORD loaded: {os.getenv('ADMIN_PASSWORD')}")
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
-app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.secret_key = os.getenv('SECRET_KEY', 'fallback_secret_key')
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 # ── Database Setup ──
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///rkstudio.db'
+# ── Database Setup ──
+database_url = os.getenv('DATABASE_URL', 'sqlite:///rkstudio.db')
+# Fix for Render PostgreSQL URL
+if database_url.startswith('postgres://'):
+    database_url = database_url.replace('postgres://', 'postgresql://', 1)
+app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -47,14 +51,15 @@ ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', 'admin123')
 # DATABASE MODELS
 # ══════════════════════════════════════
 class User(UserMixin, db.Model):
-    id       = db.Column(db.Integer, primary_key=True)
-    name     = db.Column(db.String(100), nullable=False)
-    email    = db.Column(db.String(100), unique=True, nullable=False)
-    phone    = db.Column(db.String(20), nullable=False)
-    password = db.Column(db.String(200), nullable=False)
-    verified = db.Column(db.Boolean, default=True)
-    token    = db.Column(db.String(100), nullable=True)
-    created  = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    id          = db.Column(db.Integer, primary_key=True)
+    name        = db.Column(db.String(100), nullable=False)
+    email       = db.Column(db.String(100), unique=True, nullable=False)
+    phone       = db.Column(db.String(20), nullable=False)
+    password    = db.Column(db.String(200), nullable=False)
+    verified    = db.Column(db.Boolean, default=True)
+    token       = db.Column(db.String(100), nullable=True)
+    profile_pic = db.Column(db.String(200), nullable=True, default='default.png')
+    created     = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
 class Order(db.Model):
     id           = db.Column(db.Integer, primary_key=True)
@@ -124,14 +129,14 @@ def send_verification_email(user):
         </div>
         <div style="background: white; padding: 40px; border-radius: 12px; margin-top: 20px;">
             <h2 style="color: #1a1a2e;">Hello {user.name}! 👋</h2>
-            <p style="color: #555; line-height: 1.8;">Thank you for registering with R.K. Studio. Please verify your email address by clicking the button below:</p>
+            <p style="color: #555; line-height: 1.8;">Thank you for registering with R.K. Studio. Please verify your email by clicking below:</p>
             <div style="text-align: center; margin: 30px 0;">
                 <a href="{verify_url}"
                    style="background: #c9a96e; color: #1a1a2e; padding: 14px 36px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 1rem;">
                    ✅ Verify My Email
                 </a>
             </div>
-            <p style="color: #888; font-size: 0.85rem;">This link will expire in 24 hours. If you did not register, please ignore this email.</p>
+            <p style="color: #888; font-size: 0.85rem;">If you did not register, please ignore this email.</p>
         </div>
         <p style="text-align: center; color: #aaa; font-size: 0.8rem; margin-top: 20px;">© 2025 R.K. Studio. All rights reserved.</p>
     </div>
@@ -145,6 +150,16 @@ def send_verification_email(user):
 def home():
     return render_template('index.html')
 
+@app.route('/sitemap.xml')
+def sitemap():
+    return app.send_static_file('../sitemap.xml')
+
+@app.route('/robots.txt')
+def robots():
+    return """User-agent: *
+Allow: /
+Disallow: /admin
+Sitemap: https://rkstudio.com/sitemap.xml"""
 @app.route('/wedding')
 def wedding():
     return render_template('wedding.html')
@@ -156,6 +171,10 @@ def printing():
 @app.route('/gallery')
 def gallery():
     return render_template('gallery.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 # ── My Orders ──
 @app.route('/myorders')
@@ -169,7 +188,7 @@ def myorders():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect('/')
     if request.method == 'POST':
         name     = request.form['name'].strip()
         email    = request.form['email'].strip().lower()
@@ -193,7 +212,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         login_user(user)
-        return redirect(url_for('home'))
+        return redirect('/')
 
     return render_template('register.html', error=None)
 
@@ -215,7 +234,7 @@ def verify_email(token):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect('/')
     if request.method == 'POST':
         email    = request.form['email'].strip().lower()
         password = request.form['password']
@@ -224,11 +243,11 @@ def login():
         if not user or not check_password_hash(user.password, password):
             return render_template('login.html', error='Wrong email or password!')
         if not user.verified:
-            return render_template('login.html', error='Please verify your email first! Check your inbox.')
+            return render_template('login.html', error='Please verify your email first!')
 
         login_user(user)
         next_page = request.args.get('next')
-        return redirect(next_page or url_for('home'))
+        return redirect(next_page or '/')
 
     return render_template('login.html', error=None)
 
@@ -237,7 +256,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('home'))
+    return redirect('/')
 
 # ── Booking ──
 @app.route('/booking', methods=['GET', 'POST'])
@@ -308,22 +327,22 @@ def contact():
 # ── Update Order Status (Admin) ──
 @app.route('/admin/update_order/<int:order_id>', methods=['POST'])
 def update_order_status(order_id):
-    if not session.get('logged_in'):
-        return redirect(url_for('admin'))
+    if not session.get('admin_logged_in'):
+        return redirect('/admin')
     order = Order.query.get_or_404(order_id)
     order.status = request.form['status']
     db.session.commit()
-    return redirect(url_for('admin') + '#orders')
+    return redirect('/admin')
 
 # ── Update Booking Status (Admin) ──
 @app.route('/admin/update_booking/<int:booking_id>', methods=['POST'])
 def update_booking_status(booking_id):
-    if not session.get('logged_in'):
-        return redirect(url_for('admin'))
+    if not session.get('admin_logged_in'):
+        return redirect('/admin')
     booking = Booking.query.get_or_404(booking_id)
     booking.status = request.form['status']
     db.session.commit()
-    return redirect(url_for('admin') + '#bookings')
+    return redirect('/admin')
 
 # ── Cancel Order (User) ──
 @app.route('/cancel_order/<int:order_id>', methods=['POST'])
@@ -331,11 +350,11 @@ def update_booking_status(booking_id):
 def cancel_order(order_id):
     order = Order.query.get_or_404(order_id)
     if order.user_id != current_user.id:
-        return redirect(url_for('myorders'))
+        return redirect('/myorders')
     if order.status == 'Pending':
         order.status = 'Cancelled'
         db.session.commit()
-    return redirect(url_for('myorders'))
+    return redirect('/myorders')
 
 # ── Cancel Booking (User) ──
 @app.route('/cancel_booking/<int:booking_id>', methods=['POST'])
@@ -343,29 +362,90 @@ def cancel_order(order_id):
 def cancel_booking(booking_id):
     booking = Booking.query.get_or_404(booking_id)
     if booking.user_id != current_user.id:
-        return redirect(url_for('myorders'))
+        return redirect('/myorders')
     if booking.status == 'Pending':
         booking.status = 'Cancelled'
         db.session.commit()
-    return redirect(url_for('myorders'))
+    return redirect('/myorders')
+# ── Profile ──
+@app.route('/profile', methods=['GET', 'POST'])
+@login_required
+def profile():
+    if request.method == 'POST':
+        action = request.form.get('action')
+
+        # ── Update Profile Info ──
+        if action == 'update_info':
+            name  = request.form.get('name', '').strip()
+            phone = request.form.get('phone', '').strip()
+            email = request.form.get('email', '').strip().lower()
+
+            if not is_valid_email(email):
+                return render_template('profile.html', error='Invalid email address!', success=None)
+
+            existing = User.query.filter_by(email=email).first()
+            if existing and existing.id != current_user.id:
+                return render_template('profile.html', error='Email already in use!', success=None)
+
+            current_user.name  = name
+            current_user.phone = phone
+            current_user.email = email
+            db.session.commit()
+            return render_template('profile.html', error=None, success='Profile updated successfully!')
+
+        # ── Change Password ──
+        elif action == 'change_password':
+            old_password = request.form.get('old_password')
+            new_password = request.form.get('new_password')
+            confirm      = request.form.get('confirm_password')
+
+            if not check_password_hash(current_user.password, old_password):
+                return render_template('profile.html', error='Current password is incorrect!', success=None)
+            if new_password != confirm:
+                return render_template('profile.html', error='New passwords do not match!', success=None)
+            if len(new_password) < 6:
+                return render_template('profile.html', error='Password must be at least 6 characters!', success=None)
+
+            current_user.password = generate_password_hash(new_password)
+            db.session.commit()
+            return render_template('profile.html', error=None, success='Password changed successfully!')
+
+        # ── Upload Profile Picture ──
+        elif action == 'upload_pic':
+            if 'profile_pic' not in request.files:
+                return render_template('profile.html', error='No file selected!', success=None)
+
+            file = request.files['profile_pic']
+            if file.filename == '':
+                return render_template('profile.html', error='No file selected!', success=None)
+
+            allowed = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
+            ext = file.filename.rsplit('.', 1)[1].lower() if '.' in file.filename else ''
+            if ext not in allowed:
+                return render_template('profile.html', error='Only PNG, JPG, GIF images allowed!', success=None)
+
+            filename = f"profile_{current_user.id}.{ext}"
+            filepath = os.path.join(app.static_folder, 'profiles', filename)
+            os.makedirs(os.path.join(app.static_folder, 'profiles'), exist_ok=True)
+            file.save(filepath)
+            current_user.profile_pic = filename
+            db.session.commit()
+            return render_template('profile.html', error=None, success='Profile picture updated!')
+
+    return render_template('profile.html', error=None, success=None)
 
 # ── Admin ──
 @app.route('/admin', methods=['GET', 'POST'])
-# ── Admin Logout ──
-@app.route('/admin/logout')
-def admin_logout():
-    session.pop('logged_in', None)
-    return redirect(url_for('admin'))
-def admin():
+def admin_panel():
     if request.method == 'POST':
         password = request.form['password']
         if password == ADMIN_PASSWORD:
-            session['logged_in'] = True
-            return redirect(url_for('admin'))
+            session['admin_logged_in'] = True
+            return redirect('/admin')
         else:
             return render_template('admin.html', logged_in=False, error=True,
                                    messages=[], orders=[], bookings=[], users=[])
-    if session.get('logged_in'):
+    if session.get('admin_logged_in'):
         messages = ContactMessage.query.order_by(ContactMessage.created.desc()).all()
         orders   = Order.query.order_by(Order.created.desc()).all()
         bookings = Booking.query.order_by(Booking.created.desc()).all()
@@ -375,6 +455,12 @@ def admin():
                                bookings=bookings, users=users)
     return render_template('admin.html', logged_in=False, error=False,
                            messages=[], orders=[], bookings=[], users=[])
+
+# ── Admin Logout ──
+@app.route('/admin/logout')
+def admin_logout():
+    session.pop('admin_logged_in', None)
+    return redirect('/admin')
 
 # ── Create Database ──
 with app.app_context():

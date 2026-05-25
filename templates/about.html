@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us — R.K. Studio Jaipur</title>
+    <meta name="description" content="Learn about R.K. Studio — 10+ years of professional wedding photography, videography, drone coverage and printing services in Jaipur and Dausa, Rajasthan.">
+    <meta name="keywords" content="about R.K. Studio, wedding photographer Jaipur, photography studio Rajasthan">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <nav>
+        <div class="nav-brand">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="R.K. Studio Logo" class="nav-logo">
+        </div>
+        <ul class="nav-links">
+            <li><a href="/" data-en="Home" data-hi="होम">Home</a></li>
+            <li><a href="/wedding" data-en="Wedding & Events" data-hi="शादी और इवेंट">Wedding & Events</a></li>
+            <li><a href="/printing" data-en="Printing Services" data-hi="प्रिंटिंग सेवाएं">Printing Services</a></li>
+            <li><a href="/gallery" data-en="Gallery" data-hi="गैलरी">Gallery</a></li>
+            <li><a href="/about" data-en="About Us" data-hi="हमारे बारे में">About Us</a></li>
+            <li><a href="/contact" data-en="Contact Us" data-hi="संपर्क करें">Contact Us</a></li>
+        </ul>
+        <div class="nav-auth">
+    {% if current_user.is_authenticated %}
+        <span class="nav-user">👤 {{ current_user.name }}</span>
+        <a href="/profile" class="nav-btn-login" data-en="Profile" data-hi="प्रोफ़ाइल">Profile</a>
+        <a href="/myorders" class="nav-btn-login" data-en="My Orders" data-hi="मेरे ऑर्डर">My Orders</a>
+        <a href="/logout" class="nav-btn-logout" data-en="Logout" data-hi="लॉगआउट">Logout</a>
+    {% else %}
+        <a href="/login" class="nav-btn-login" data-en="Login" data-hi="लॉगिन">Login</a>
+        <a href="/register" class="nav-btn-register" data-en="Register" data-hi="रजिस्टर">Register</a>
+    {% endif %}
+</div>
+        <div class="lang-toggle">
+            <button onclick="setLang('en')" id="btn-en" class="lang-btn active">EN</button>
+            <span>|</span>
+            <button onclick="setLang('hi')" id="btn-hi" class="lang-btn">हिं</button>
+        </div>
+    </nav>
+
+    <header>
+        <h1 data-en="✨ About R.K. Studio" data-hi="✨ आर.के. स्टूडियो के बारे में">✨ About R.K. Studio</h1>
+        <p data-en="Capturing memories, delivering excellence since 10+ years" data-hi="10+ वर्षों से यादें कैद करते हुए, उत्कृष्टता प्रदान करते हुए">Capturing memories, delivering excellence since 10+ years</p>
+    </header>
+
+    <main>
+
+        <!-- ── Our Story ── -->
+        <div class="about-wrapper">
+
+            <div class="about-story">
+                <div class="about-image">
+                    <img src="{{ url_for('static', filename='logo1.png') }}" alt="R.K. Studio">
+                </div>
+                <div class="about-text">
+                    <h2 data-en="Our Story" data-hi="हमारी कहानी">Our Story</h2>
+                    <p data-en="R.K. Studio was founded with a simple vision — to capture life's most precious moments with creativity, passion and professionalism. Over the past 10+ years, we have grown from a small photography studio to a full-service media and printing company serving clients across Jaipur, Dausa and all of Rajasthan." data-hi="आर.के. स्टूडियो की स्थापना एक सरल दृष्टि के साथ की गई थी — जीवन के सबसे अनमोल पलों को रचनात्मकता, जुनून और व्यावसायिकता के साथ कैद करना। पिछले 10+ वर्षों में, हम एक छोटे फोटोग्राफी स्टूडियो से जयपुर, दौसा और पूरे राजस्थान में ग्राहकों की सेवा करने वाली एक पूर्ण-सेवा मीडिया और प्रिंटिंग कंपनी बन गए हैं।">R.K. Studio was founded with a simple vision — to capture life's most precious moments with creativity, passion and professionalism. Over the past 10+ years, we have grown from a small photography studio to a full-service media and printing company serving clients across Jaipur, Dausa and all of Rajasthan.</p>
+                    <p data-en="We believe every event tells a unique story. Whether it's a grand wedding, a corporate event or a simple family gathering — we bring the same dedication and attention to detail to every project we undertake." data-hi="हम मानते हैं कि हर इवेंट एक अनूठी कहानी कहता है। चाहे वह एक भव्य शादी हो, एक कॉर्पोरेट इवेंट हो या एक साधारण पारिवारिक समारोह — हम हर परियोजना में एक ही समर्पण और विस्तार पर ध्यान देते हैं।">We believe every event tells a unique story. Whether it's a grand wedding, a corporate event or a simple family gathering — we bring the same dedication and attention to detail to every project we undertake.</p>
+                </div>
+            </div>
+
+            <!-- ── Stats ── -->
+            <div class="about-stats">
+                <div class="stat-card">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-label" data-en="Years of Experience" data-hi="वर्षों का अनुभव">Years of Experience</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label" data-en="Events Covered" data-hi="इवेंट कवर किए">Events Covered</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">1000+</div>
+                    <div class="stat-label" data-en="Happy Customers" data-hi="खुश ग्राहक">Happy Customers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label" data-en="Cities Served" data-hi="शहरों में सेवा">Cities Served</div>
+                </div>
+            </div>
+
+            <!-- ── Why Choose Us ── -->
+            <div class="about-why">
+                <h2 data-en="Why Choose R.K. Studio?" data-hi="आर.के. स्टूडियो क्यों चुनें?">Why Choose R.K. Studio?</h2>
+                <div class="why-grid">
+                    <div class="why-card">
+                        <div class="why-icon">🏆</div>
+                        <h3 data-en="10+ Years Experience" data-hi="10+ वर्षों का अनुभव">10+ Years Experience</h3>
+                        <p data-en="A decade of expertise in photography, videography and printing services across Rajasthan." data-hi="राजस्थान में फोटोग्राफी, वीडियोग्राफी और प्रिंटिंग सेवाओं में एक दशक की विशेषज्ञता।">A decade of expertise in photography, videography and printing services across Rajasthan.</p>
+                    </div>
+                    <div class="why-card">
+                        <div class="why-icon">📷</div>
+                        <h3 data-en="Professional Equipment" data-hi="पेशेवर उपकरण">Professional Equipment</h3>
+                        <p data-en="We use the latest cameras, drones, LED walls and printing equipment for the best results." data-hi="हम सर्वोत्तम परिणामों के लिए नवीनतम कैमरे, ड्रोन, एलईडी वॉल और प्रिंटिंग उपकरण का उपयोग करते हैं।">We use the latest cameras, drones, LED walls and printing equipment for the best results.</p>
+                    </div>
+                    <div class="why-card">
+                        <div class="why-icon">💰</div>
+                        <h3 data-en="Affordable Pricing" data-hi="किफायती मूल्य">Affordable Pricing</h3>
+                        <p data-en="Premium quality services at competitive prices. We offer packages for every budget." data-hi="प्रतिस्पर्धी कीमतों पर प्रीमियम गुणवत्ता सेवाएं। हम हर बजट के लिए पैकेज प्रदान करते हैं।">Premium quality services at competitive prices. We offer packages for every budget.</p>
+                    </div>
+                    <div class="why-card">
+                        <div class="why-icon">⏰</div>
+                        <h3 data-en="On Time Delivery" data-hi="समय पर डिलीवरी">On Time Delivery</h3>
+                        <p data-en="We respect your time. All orders and projects are delivered on time, every time." data-hi="हम आपके समय का सम्मान करते हैं। सभी ऑर्डर और परियोजनाएं हर बार समय पर डिलीवर की जाती हैं।">We respect your time. All orders and projects are delivered on time, every time.</p>
+                    </div>
+                    <div class="why-card">
+                        <div class="why-icon">🎯</div>
+                        <h3 data-en="Attention to Detail" data-hi="विवरण पर ध्यान">Attention to Detail</h3>
+                        <p data-en="Every shot, every print is crafted with precision and care to exceed your expectations." data-hi="हर शॉट, हर प्रिंट को आपकी अपेक्षाओं से अधिक करने के लिए सटीकता और देखभाल के साथ तैयार किया जाता है।">Every shot, every print is crafted with precision and care to exceed your expectations.</p>
+                    </div>
+                    <div class="why-card">
+                        <div class="why-icon">🤝</div>
+                        <h3 data-en="Trusted by 1000+" data-hi="1000+ द्वारा विश्वसनीय">Trusted by 1000+</h3>
+                        <p data-en="Over 1000 happy customers across Jaipur and Dausa trust R.K. Studio for their special moments." data-hi="जयपुर और दौसा में 1000 से अधिक खुश ग्राहक अपने खास पलों के लिए आर.के. स्टूडियो पर भरोसा करते हैं।">Over 1000 happy customers across Jaipur and Dausa trust R.K. Studio for their special moments.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Our Services ── -->
+            <div class="about-services">
+                <h2 data-en="What We Offer" data-hi="हम क्या प्रदान करते हैं">What We Offer</h2>
+                <div class="services-two-col">
+                    <div class="services-col">
+                        <h3 data-en="🎬 Wedding & Event Services" data-hi="🎬 शादी और इवेंट सेवाएं">🎬 Wedding & Event Services</h3>
+                        <ul>
+                            <li data-en="📷 Photography" data-hi="📷 फोटोग्राफी">📷 Photography</li>
+                            <li data-en="🎥 Videography" data-hi="🎥 वीडियोग्राफी">🎥 Videography</li>
+                            <li data-en="🚁 Drone Coverage" data-hi="🚁 ड्रोन कवरेज">🚁 Drone Coverage</li>
+                            <li data-en="🎦 Crane / Jimmy Jib Camera" data-hi="🎦 क्रेन / जिमी जिब कैमरा">🎦 Crane / Jimmy Jib Camera</li>
+                            <li data-en="📺 LED Wall / Plasma Screen" data-hi="📺 एलईडी वॉल / प्लाज़्मा स्क्रीन">📺 LED Wall / Plasma Screen</li>
+                            <li data-en="📡 Live Streaming" data-hi="📡 लाइव स्ट्रीमिंग">📡 Live Streaming</li>
+                            <li data-en="🎙️ Live Event Production" data-hi="🎙️ लाइव इवेंट प्रोडक्शन">🎙️ Live Event Production</li>
+                            <li data-en="🎞️ Video Editing & Post Production" data-hi="🎞️ वीडियो एडिटिंग और पोस्ट प्रोडक्शन">🎞️ Video Editing & Post Production</li>
+                        </ul>
+                    </div>
+                    <div class="services-col">
+                        <h3 data-en="🖨️ Printing Services" data-hi="🖨️ प्रिंटिंग सेवाएं">🖨️ Printing Services</h3>
+                        <ul>
+                            <li data-en="🪪 ID Card Printing" data-hi="🪪 आईडी कार्ड प्रिंटिंग">🪪 ID Card Printing</li>
+                            <li data-en="💳 PVC ID Card Printing" data-hi="💳 पीवीसी आईडी कार्ड प्रिंटिंग">💳 PVC ID Card Printing</li>
+                            <li data-en="👔 Employee ID Cards" data-hi="👔 कर्मचारी आईडी कार्ड">👔 Employee ID Cards</li>
+                            <li data-en="🎓 School / College ID Cards" data-hi="🎓 स्कूल / कॉलेज आईडी कार्ड">🎓 School / College ID Cards</li>
+                            <li data-en="📇 Visiting Card Printing" data-hi="📇 विजिटिंग कार्ड प्रिंटिंग">📇 Visiting Card Printing</li>
+                            <li data-en="🖼️ Flex & Banner Printing" data-hi="🖼️ फ्लेक्स और बैनर प्रिंटिंग">🖼️ Flex & Banner Printing</li>
+                            <li data-en="📄 Brochure / Pamphlet Printing" data-hi="📄 ब्रोशर / पैम्फलेट प्रिंटिंग">📄 Brochure / Pamphlet Printing</li>
+                            <li data-en="🎨 Custom Printing Services" data-hi="🎨 कस्टम प्रिंटिंग सेवाएं">🎨 Custom Printing Services</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── CTA ── -->
+            <div class="booking-banner">
+                <h2 data-en="Ready to Work With Us?" data-hi="हमारे साथ काम करने के लिए तैयार हैं?">Ready to Work With Us?</h2>
+                <p data-en="Contact us today and let's make your event unforgettable!" data-hi="आज हमसे संपर्क करें और अपने इवेंट को यादगार बनाएं!">Contact us today and let's make your event unforgettable!</p>
+                <a href="/contact" class="btn" data-en="Get In Touch 📞" data-hi="संपर्क करें 📞">Get In Touch 📞</a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <p data-en="© 2000 R.K. Studio. All rights reserved." data-hi="© 2025 आर.के. स्टूडियो। सर्वाधिकार सुरक्षित।">© 2025 R.K. Studio. All rights reserved.</p>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/918000583737" target="_blank" class="whatsapp-float">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+    </a>
+
+    <script>
+        function setLang(lang) {
+            localStorage.setItem('rk_lang', lang);
+            applyLang(lang);
+        }
+
+        function applyLang(lang) {
+            document.querySelectorAll('[data-en]').forEach(el => {
+                el.textContent = lang === 'hi' ? el.getAttribute('data-hi') : el.getAttribute('data-en');
+            });
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            document.getElementById('btn-hi').classList.toggle('active', lang === 'hi');
+            document.documentElement.lang = lang;
+        }
+
+        const savedLang = localStorage.getItem('rk_lang') || 'en';
+        applyLang(savedLang);
+    </script>
+
+</body>
+</html>
