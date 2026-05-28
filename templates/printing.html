@@ -4,16 +4,174 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ID Card & Banner Printing Services in Jaipur — R.K. Studio</title>
-<meta name="description" content="High quality ID card printing, PVC cards, visiting cards, flex banner printing, brochure printing and custom printing services in Jaipur and Dausa, Rajasthan.">
-<meta name="keywords" content="ID card printing Jaipur, PVC card printing Jaipur, visiting card printing Jaipur, banner printing Jaipur, flex printing Jaipur, brochure printing Dausa, printing services Rajasthan">
-<meta name="robots" content="index, follow">
-<meta name="geo.region" content="IN-RJ">
-<meta name="geo.placename" content="Jaipur, Rajasthan">
-<meta property="og:title" content="ID Card & Banner Printing Services in Jaipur — R.K. Studio">
-<meta property="og:description" content="High quality ID card, visiting card, banner, brochure and custom printing services in Jaipur and Dausa, Rajasthan.">
-<meta property="og:type" content="website">
-<link rel="canonical" href="https://rkstudio.com/printing">
+    <meta name="description" content="High quality ID card printing, PVC cards, visiting cards, flex banner printing, brochure printing and custom printing services in Jaipur and Dausa, Rajasthan.">
+    <meta name="keywords" content="ID card printing Jaipur, PVC card printing Jaipur, visiting card printing Jaipur, banner printing Jaipur, flex printing Jaipur, brochure printing Dausa, printing services Rajasthan">
+    <meta name="robots" content="index, follow">
+    <meta name="geo.region" content="IN-RJ">
+    <meta name="geo.placename" content="Jaipur, Rajasthan">
+    <link rel="canonical" href="https://rkstudio.com/printing">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZQHZJ3LR1M"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-ZQHZJ3LR1M');
+    </script>
+    <style>
+        /* ── Printing Cards Style 4 - Glassmorphism ── */
+        .printing-section {
+            background: linear-gradient(135deg, #0d0d1a 0%, #1a1a2e 50%, #0d0d2e 100%);
+            padding: 60px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .printing-section::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(201,169,110,0.08) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 20%, rgba(201,169,110,0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .printing-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .printing-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(201,169,110,0.2);
+            border-radius: 16px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .printing-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #c9a96e, transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .printing-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center top, rgba(201,169,110,0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .printing-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(201,169,110,0.5);
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 0 30px rgba(201,169,110,0.1);
+        }
+
+        .printing-card:hover::before { opacity: 1; }
+        .printing-card:hover::after { opacity: 1; }
+
+        .printing-card-bg-icon {
+            position: absolute;
+            bottom: -10px; right: -10px;
+            font-size: 80px;
+            opacity: 0.04;
+            transition: all 0.4s ease;
+            pointer-events: none;
+        }
+
+        .printing-card:hover .printing-card-bg-icon {
+            opacity: 0.08;
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .printing-card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            display: block;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 4px 12px rgba(201,169,110,0.3));
+            transition: transform 0.4s ease;
+        }
+
+        .printing-card:hover .printing-card-icon {
+            transform: scale(1.15) translateY(-4px);
+        }
+
+        .printing-card h3 {
+            font-family: 'Playfair Display', serif;
+            color: #c9a96e;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .printing-card p {
+            color: rgba(255,255,255,0.55);
+            font-size: 0.8rem;
+            line-height: 1.6;
+            margin-bottom: 18px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .printing-card-btn {
+            display: inline-block;
+            background: transparent;
+            border: 1px solid rgba(201,169,110,0.4);
+            color: #c9a96e;
+            padding: 7px 20px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .printing-card:hover .printing-card-btn {
+            background: linear-gradient(135deg, #c9a96e, #e8c98a);
+            color: #0d0d1a;
+            border-color: transparent;
+            box-shadow: 0 4px 20px rgba(201,169,110,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .printing-section { padding: 40px 20px; }
+            .printing-cards-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+            .printing-card { padding: 22px 16px; }
+        }
+
+        @media (max-width: 480px) {
+            .printing-cards-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
 
@@ -30,16 +188,16 @@
             <li><a href="/contact" data-en="Contact Us" data-hi="संपर्क करें">Contact Us</a></li>
         </ul>
         <div class="nav-auth">
-    {% if current_user.is_authenticated %}
-        <span class="nav-user">👤 {{ current_user.name }}</span>
-        <a href="/profile" class="nav-btn-login" data-en="Profile" data-hi="प्रोफ़ाइल">Profile</a>
-        <a href="/myorders" class="nav-btn-login" data-en="My Orders" data-hi="मेरे ऑर्डर">My Orders</a>
-        <a href="/logout" class="nav-btn-logout" data-en="Logout" data-hi="लॉगआउट">Logout</a>
-    {% else %}
-        <a href="/login" class="nav-btn-login" data-en="Login" data-hi="लॉगिन">Login</a>
-        <a href="/register" class="nav-btn-register" data-en="Register" data-hi="रजिस्टर">Register</a>
-    {% endif %}
-</div>
+            {% if current_user.is_authenticated %}
+                <span class="nav-user">👤 {{ current_user.name }}</span>
+                <a href="/profile" class="nav-btn-login" data-en="Profile" data-hi="प्रोफ़ाइल">Profile</a>
+                <a href="/myorders" class="nav-btn-login" data-en="My Orders" data-hi="मेरे ऑर्डर">My Orders</a>
+                <a href="/logout" class="nav-btn-logout" data-en="Logout" data-hi="लॉगआउट">Logout</a>
+            {% else %}
+                <a href="/login" class="nav-btn-login" data-en="Login" data-hi="लॉगिन">Login</a>
+                <a href="/register" class="nav-btn-register" data-en="Register" data-hi="रजिस्टर">Register</a>
+            {% endif %}
+        </div>
         <div class="lang-toggle">
             <button onclick="setLang('en')" id="btn-en" class="lang-btn active">EN</button>
             <span>|</span>
@@ -53,64 +211,74 @@
     </header>
 
     <main>
-        <div class="services-container">
+        <div class="printing-section">
+            <div class="printing-cards-grid">
 
-            <div class="service-card">
-                <div class="icon">🪪</div>
-                <h2 data-en="ID Card Printing" data-hi="आईडी कार्ड प्रिंटिंग">ID Card Printing</h2>
-                <p data-en="Professional ID card printing for all types of organizations." data-hi="सभी प्रकार के संगठनों के लिए पेशेवर आईडी कार्ड प्रिंटिंग।">Professional ID card printing for all types of organizations.</p>
-                <button onclick="handleOrder('ID Card Printing')" class="btn" data-en="Order Now" data-hi="अभी ऑर्डर करें">Order Now</button>
+                <div class="printing-card">
+                    <span class="printing-card-bg-icon">🪪</span>
+                    <span class="printing-card-icon">🪪</span>
+                    <h3 data-en="ID Card Printing" data-hi="आईडी कार्ड प्रिंटिंग">ID Card Printing</h3>
+                    <p data-en="Professional ID card printing for all types of organizations." data-hi="सभी प्रकार के संगठनों के लिए पेशेवर आईडी कार्ड प्रिंटिंग।">Professional ID card printing for all types of organizations.</p>
+                    <button onclick="handleOrder('ID Card Printing')" class="printing-card-btn" data-en="Order Now" data-hi="अभी ऑर्डर करें">Order Now</button>
+                </div>
+
+                <div class="printing-card">
+                    <span class="printing-card-bg-icon">💳</span>
+                    <span class="printing-card-icon">💳</span>
+                    <h3 data-en="PVC ID Card Printing" data-hi="पीवीसी आईडी कार्ड प्रिंटिंग">PVC ID Card Printing</h3>
+                    <p data-en="Durable PVC ID cards with high quality print finish." data-hi="उच्च गुणवत्ता प्रिंट फिनिश के साथ टिकाऊ पीवीसी आईडी कार्ड।">Durable PVC ID cards with high quality print finish.</p>
+                    <button onclick="handleOrder('PVC ID Card Printing')" class="printing-card-btn" data-en="Order Now" data-hi="अभी ऑर्डर करें">Order Now</button>
+                </div>
+
+                <div class="printing-card">
+                    <span class="printing-card-bg-icon">👔</span>
+                    <span class="printing-card-icon">👔</span>
+                    <h3 data-en="Employee ID Cards" data-hi="कर्मचारी आईडी कार्ड">Employee ID Cards</h3>
+                    <p data-en="Custom employee ID cards for businesses and corporations." data-hi="व्यवसायों और कॉर्पोरेशन के लिए कस्टम कर्मचारी आईडी कार्ड।">Custom employee ID cards for businesses and corporations.</p>
+                    <button onclick="handleOrder('Employee ID Cards')" class="printing-card-btn" data-en="Order Now" data-hi="अभी ऑर्डर करें">Order Now</button>
+                </div>
+
+                <div class="printing-card">
+                    <span class="printing-card-bg-icon">🎓</span>
+                    <span class="printing-card-icon">🎓</span>
+                    <h3 data-en="School / College ID Cards" data-hi="स्कूल / कॉलेज आईडी कार्ड">School / College ID Cards</h3>
+                    <p data-en="Reliable ID cards for schools, colleges and universities." data-hi="स्कूलों, कॉलेजों और विश्वविद्यालयों के लिए विश्वसनीय आईडी कार्ड।">Reliable ID cards for schools, colleges and universities.</p>
+                    <button onclick="handleOrder('School College ID Cards')" class="printing-card-btn" data-en="Order Now" data-hi="अभी ऑर्डर करें">Order Now</button>
+                </div>
+
+                <div class="printing-card">
+                    <span class="printing-card-bg-icon">📇</span>
+                    <span class="printing-card-icon">📇</span>
+                    <h3 data-en="Visiting Card Printing" data-hi="विजिटिंग कार्ड प्रिंटिंग">Visiting Card Printing</h3>
+                    <p data-en="Elegant and professional visiting cards for your business." data-hi="आपके व्यवसाय के लिए सुंदर और पेशेवर विजिटिंग कार्ड।">Elegant and professional visiting cards for your business.</p>
+                    <button onclick="handleOrder('Visiting Card Printing')" class="printing-card-btn" data-en="Order Now" data-hi="अभी ऑर्डर करें">Order Now</button>
+                </div>
+
+                <div class="printing-card">
+                    <span class="printing-card-bg-icon">🖼️</span>
+                    <span class="printing-card-icon">🖼️</span>
+                    <h3 data-en="Flex & Banner Printing" data-hi="फ्लेक्स और बैनर प्रिंटिंग">Flex & Banner Printing</h3>
+                    <p data-en="Large format flex and banner printing for events and promotions." data-hi="इवेंट और प्रमोशन के लिए लार्ज फॉर्मेट फ्लेक्स और बैनर प्रिंटिंग।">Large format flex and banner printing for events and promotions.</p>
+                    <button onclick="handleOrder('Flex and Banner Printing')" class="printing-card-btn" data-en="Order Now" data-hi="अभी ऑर्डर करें">Order Now</button>
+                </div>
+
+                <div class="printing-card">
+                    <span class="printing-card-bg-icon">📄</span>
+                    <span class="printing-card-icon">📄</span>
+                    <h3 data-en="Brochure / Pamphlet Printing" data-hi="ब्रोशर / पैम्फलेट प्रिंटिंग">Brochure / Pamphlet Printing</h3>
+                    <p data-en="Eye catching brochures and pamphlets for your marketing needs." data-hi="आपकी मार्केटिंग जरूरतों के लिए आकर्षक ब्रोशर और पैम्फलेट।">Eye catching brochures and pamphlets for your marketing needs.</p>
+                    <button onclick="handleOrder('Brochure Pamphlet Printing')" class="printing-card-btn" data-en="Order Now" data-hi="अभी ऑर्डर करें">Order Now</button>
+                </div>
+
+                <div class="printing-card">
+                    <span class="printing-card-bg-icon">🎨</span>
+                    <span class="printing-card-icon">🎨</span>
+                    <h3 data-en="Custom Printing Services" data-hi="कस्टम प्रिंटिंग सेवाएं">Custom Printing Services</h3>
+                    <p data-en="Any custom printing requirement handled with care and precision." data-hi="किसी भी कस्टम प्रिंटिंग जरूरत को सावधानी और सटीकता से पूरा किया जाता है।">Any custom printing requirement handled with care and precision.</p>
+                    <button onclick="handleOrder('Custom Printing Services')" class="printing-card-btn" data-en="Order Now" data-hi="अभी ऑर्डर करें">Order Now</button>
+                </div>
+
             </div>
-
-            <div class="service-card">
-                <div class="icon">💳</div>
-                <h2 data-en="PVC ID Card Printing" data-hi="पीवीसी आईडी कार्ड प्रिंटिंग">PVC ID Card Printing</h2>
-                <p data-en="Durable PVC ID cards with high quality print finish." data-hi="उच्च गुणवत्ता प्रिंट फिनिश के साथ टिकाऊ पीवीसी आईडी कार्ड।">Durable PVC ID cards with high quality print finish.</p>
-                <button onclick="handleOrder('PVC ID Card Printing')" class="btn" data-en="Order Now" data-hi="अभी ऑर्डर करें">Order Now</button>
-            </div>
-
-            <div class="service-card">
-                <div class="icon">👔</div>
-                <h2 data-en="Employee ID Cards" data-hi="कर्मचारी आईडी कार्ड">Employee ID Cards</h2>
-                <p data-en="Custom employee ID cards for businesses and corporations." data-hi="व्यवसायों और कॉर्पोरेशन के लिए कस्टम कर्मचारी आईडी कार्ड।">Custom employee ID cards for businesses and corporations.</p>
-                <button onclick="handleOrder('Employee ID Cards')" class="btn" data-en="Order Now" data-hi="अभी ऑर्डर करें">Order Now</button>
-            </div>
-
-            <div class="service-card">
-                <div class="icon">🎓</div>
-                <h2 data-en="School / College ID Cards" data-hi="स्कूल / कॉलेज आईडी कार्ड">School / College ID Cards</h2>
-                <p data-en="Reliable ID cards for schools, colleges and universities." data-hi="स्कूलों, कॉलेजों और विश्वविद्यालयों के लिए विश्वसनीय आईडी कार्ड।">Reliable ID cards for schools, colleges and universities.</p>
-                <button onclick="handleOrder('School College ID Cards')" class="btn" data-en="Order Now" data-hi="अभी ऑर्डर करें">Order Now</button>
-            </div>
-
-            <div class="service-card">
-                <div class="icon">📇</div>
-                <h2 data-en="Visiting Card Printing" data-hi="विजिटिंग कार्ड प्रिंटिंग">Visiting Card Printing</h2>
-                <p data-en="Elegant and professional visiting cards for your business." data-hi="आपके व्यवसाय के लिए सुंदर और पेशेवर विजिटिंग कार्ड।">Elegant and professional visiting cards for your business.</p>
-                <button onclick="handleOrder('Visiting Card Printing')" class="btn" data-en="Order Now" data-hi="अभी ऑर्डर करें">Order Now</button>
-            </div>
-
-            <div class="service-card">
-                <div class="icon">🖼️</div>
-                <h2 data-en="Flex & Banner Printing" data-hi="फ्लेक्स और बैनर प्रिंटिंग">Flex & Banner Printing</h2>
-                <p data-en="Large format flex and banner printing for events and promotions." data-hi="इवेंट और प्रमोशन के लिए लार्ज फॉर्मेट फ्लेक्स और बैनर प्रिंटिंग।">Large format flex and banner printing for events and promotions.</p>
-                <button onclick="handleOrder('Flex and Banner Printing')" class="btn" data-en="Order Now" data-hi="अभी ऑर्डर करें">Order Now</button>
-            </div>
-
-            <div class="service-card">
-                <div class="icon">📄</div>
-                <h2 data-en="Brochure / Pamphlet Printing" data-hi="ब्रोशर / पैम्फलेट प्रिंटिंग">Brochure / Pamphlet Printing</h2>
-                <p data-en="Eye catching brochures and pamphlets for your marketing needs." data-hi="आपकी मार्केटिंग जरूरतों के लिए आकर्षक ब्रोशर और पैम्फलेट।">Eye catching brochures and pamphlets for your marketing needs.</p>
-                <button onclick="handleOrder('Brochure Pamphlet Printing')" class="btn" data-en="Order Now" data-hi="अभी ऑर्डर करें">Order Now</button>
-            </div>
-
-            <div class="service-card">
-                <div class="icon">🎨</div>
-                <h2 data-en="Custom Printing Services" data-hi="कस्टम प्रिंटिंग सेवाएं">Custom Printing Services</h2>
-                <p data-en="Any custom printing requirement handled with care and precision." data-hi="किसी भी कस्टम प्रिंटिंग जरूरत को सावधानी और सटीकता से पूरा किया जाता है।">Any custom printing requirement handled with care and precision.</p>
-                <button onclick="handleOrder('Custom Printing Services')" class="btn" data-en="Order Now" data-hi="अभी ऑर्डर करें">Order Now</button>
-            </div>
-
         </div>
     </main>
 
@@ -128,7 +296,7 @@
     </div>
 
     <footer>
-        <p data-en="© 2000 R.K. Studio. All rights reserved." data-hi="© 2000 आर.के. स्टूडियो। सर्वाधिकार सुरक्षित।">© 2025 R.K. Studio. All rights reserved.</p>
+        <p data-en="© 2025 R.K. Studio. All rights reserved." data-hi="© 2025 आर.के. स्टूडियो। सर्वाधिकार सुरक्षित।">© 2025 R.K. Studio. All rights reserved.</p>
     </footer>
 
     <!-- WhatsApp Floating Button -->
@@ -137,7 +305,6 @@
     </a>
 
     <script>
-        // ── Handle Order Button ──
         const isLoggedIn = {{ 'true' if current_user.is_authenticated else 'false' }};
 
         function handleOrder(service) {
@@ -148,7 +315,6 @@
             }
         }
 
-        // ── Login Popup ──
         function showLoginPopup() {
             document.getElementById('loginPopup').classList.add('show');
         }
@@ -161,7 +327,6 @@
             if (e.target === this) hideLoginPopup();
         });
 
-        // ── Language Toggle ──
         function setLang(lang) {
             localStorage.setItem('rk_lang', lang);
             applyLang(lang);

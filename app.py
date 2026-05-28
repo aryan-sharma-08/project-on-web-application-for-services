@@ -187,31 +187,37 @@ def myorders():
 # ── Register ──
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    if current_user.is_authenticated:
-        return redirect('/')
-    if request.method == 'POST':
-        name     = request.form['name'].strip()
-        email    = request.form['email'].strip().lower()
-        phone    = request.form['phone'].strip()
-        password = request.form['password']
-        confirm  = request.form['confirm']
 
-        if not is_valid_email(email):
-            return render_template('register.html', error='Please enter a valid email address!')
-        if password != confirm:
-            return render_template('register.html', error='Passwords do not match!')
-        if len(password) < 6:
-            return render_template('register.html', error='Password must be at least 6 characters!')
+    hashed = generate_password_hash(password)
 
-        existing = User.query.filter_by(email=email).first()
-        if existing:
-            return render_template('register.html', error='Email already registered! Please login.')
+    user = User(
+        name=name,
+        email=email,
+        phone=phone,
+        password=hashed,
+        verified=False
+    )
 
-        hashed = generate_password_hash(password)
-        user   = User(name=name, email=email, phone=phone, password=hashed, verified=True)
-        db.session.add(user)
+    db.session.add(user)
+    db.session.commit()
+
+    try:
+        send_verification_email(user)
+
+        return render_template(
+            'register.html',
+            success=True,
+            email=email,
+            error=None
+        )
+
+    except Exception as e:
+        # If email fails, still allow login
+        user.verified = True
         db.session.commit()
+
         login_user(user)
+
         return redirect('/')
 
     return render_template('register.html', error=None)
