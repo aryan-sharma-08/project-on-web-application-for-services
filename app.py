@@ -9,6 +9,8 @@ import pathlib
 import os
 import re
 import secrets
+import secrets
+import random
 
 # ── Load Environment Variables ──
 env_path = pathlib.Path(__file__).parent / '.env'
@@ -56,8 +58,10 @@ class User(UserMixin, db.Model):
     email       = db.Column(db.String(100), unique=True, nullable=False)
     phone       = db.Column(db.String(20), nullable=False)
     password    = db.Column(db.String(200), nullable=False)
-    verified    = db.Column(db.Boolean, default=True)
+    verified    = db.Column(db.Boolean, default=False)
     token       = db.Column(db.String(100), nullable=True)
+    otp         = db.Column(db.String(6), nullable=True)
+    otp_expiry  = db.Column(db.DateTime, nullable=True)
     profile_pic = db.Column(db.String(200), nullable=True, default='default.png')
     created     = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
@@ -113,36 +117,29 @@ def is_valid_email(email):
     pattern = r'^[\w\.-]+@[\w\.-]+\.\w{2,}$'
     return re.match(pattern, email) is not None
 
-def send_verification_email(user):
-    token = secrets.token_urlsafe(32)
-    user.token = token
-    db.session.commit()
-    verify_url = url_for('verify_email', token=token, _external=True)
+def send_otp_email(user, otp):
     msg = Message(
-        subject='✅ Verify your R.K. Studio Account',
+        subject='🔐 Your R.K. Studio Verification Code',
         recipients=[user.email]
     )
     msg.html = f'''
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 40px; background: #f9f6f1;">
-        <div style="background: #1a1a2e; padding: 30px; border-radius: 12px; text-align: center;">
-            <h1 style="color: #c9a96e; margin: 0;">R.K. Studio</h1>
+        <div style="background: #0d0d1a; padding: 30px; border-radius: 12px; text-align: center;">
+            <h1 style="color: #c9a96e; margin: 0; letter-spacing: 2px;">R.K. STUDIO</h1>
         </div>
-        <div style="background: white; padding: 40px; border-radius: 12px; margin-top: 20px;">
-            <h2 style="color: #1a1a2e;">Hello {user.name}! 👋</h2>
-            <p style="color: #555; line-height: 1.8;">Thank you for registering with R.K. Studio. Please verify your email by clicking below:</p>
-            <div style="text-align: center; margin: 30px 0;">
-                <a href="{verify_url}"
-                   style="background: #c9a96e; color: #1a1a2e; padding: 14px 36px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 1rem;">
-                   ✅ Verify My Email
-                </a>
+        <div style="background: white; padding: 40px; border-radius: 12px; margin-top: 20px; border: 1px solid rgba(201,169,110,0.2);">
+            <h2 style="color: #1a1a2e; margin-bottom: 10px;">Hello {user.name}! 👋</h2>
+            <p style="color: #555; line-height: 1.8; margin-bottom: 30px;">Your verification code for R.K. Studio is:</p>
+            <div style="background: linear-gradient(135deg, #0d0d1a, #1a1a2e); border-radius: 12px; padding: 30px; text-align: center; margin-bottom: 30px;">
+                <h1 style="color: #c9a96e; font-size: 3rem; letter-spacing: 16px; margin: 0;">{otp}</h1>
             </div>
-            <p style="color: #888; font-size: 0.85rem;">If you did not register, please ignore this email.</p>
+            <p style="color: #888; font-size: 0.9rem; text-align: center;">This code expires in <strong>10 minutes</strong>.</p>
+            <p style="color: #888; font-size: 0.85rem; text-align: center; margin-top: 10px;">If you did not register, please ignore this email.</p>
         </div>
-        <p style="text-align: center; color: #aaa; font-size: 0.8rem; margin-top: 20px;">© 2025 R.K. Studio. All rights reserved.</p>
+        <p style="text-align: center; color: #aaa; font-size: 0.8rem; margin-top: 20px;">© 2000 R.K. Studio. All rights reserved.</p>
     </div>
     '''
     mail.send(msg)
-
 # ══════════════════════════════════════
 # ROUTES
 # ══════════════════════════════════════
@@ -187,40 +184,92 @@ def myorders():
 # ── Register ──
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-
-    hashed = generate_password_hash(password)
-
-    user = User(
-        name=name,
-        email=email,
-        phone=phone,
-        password=hashed,
-        verified=False
-    )
-
-    db.session.add(user)
-    db.session.commit()
-
-    try:
-        send_verification_email(user)
-
-        return render_template(
-            'register.html',
-            success=True,
-            email=email,
-            error=None
-        )
-
-    except Exception as e:
-        # If email fails, still allow login
-        user.verified = True
-        db.session.commit()
-
-        login_user(user)
-
+    if current_user.is_authenticated:
         return redirect('/')
+    if request.method == 'POST':
+        action = request.form.get('action', 'register')
 
-    return render_template('register.html', error=None)
+        # ── Step 1: Initial Registration ──
+        if action == 'register':
+            name     = request.form['name'].strip()
+            email    = request.form['email'].strip().lower()
+            phone    = request.form['phone'].strip()
+            password = request.form['password']
+            confirm  = request.form['confirm']
+
+            if not is_valid_email(email):
+                return render_template('register.html', error='Please enter a valid email address!', step='register')
+            if password != confirm:
+                return render_template('register.html', error='Passwords do not match!', step='register')
+            if len(password) < 6:
+                return render_template('register.html', error='Password must be at least 6 characters!', step='register')
+
+            existing = User.query.filter_by(email=email).first()
+            if existing and existing.verified:
+                return render_template('register.html', error='Email already registered! Please login.', step='register')
+
+            # Generate OTP
+            otp = str(random.randint(100000, 999999))
+            otp_expiry = datetime.datetime.utcnow() + datetime.timedelta(minutes=10)
+
+            if existing and not existing.verified:
+                # Update existing unverified user
+                existing.name     = name
+                existing.phone    = phone
+                existing.password = generate_password_hash(password)
+                existing.otp      = otp
+                existing.otp_expiry = otp_expiry
+                db.session.commit()
+                user = existing
+            else:
+                # Create new user
+                hashed = generate_password_hash(password)
+                user   = User(name=name, email=email, phone=phone,
+                             password=hashed, verified=False, otp=otp,
+                             otp_expiry=otp_expiry)
+                db.session.add(user)
+                db.session.commit()
+
+            # Send OTP
+            try:
+                send_otp_email(user, otp)
+                return render_template('register.html', step='otp',
+                                      email=email, success=None, error=None)
+            except Exception as e:
+                # If email fails auto verify
+                user.verified = True
+                user.otp = None
+                db.session.commit()
+                login_user(user)
+                return redirect('/')
+
+        # ── Step 2: OTP Verification ──
+        elif action == 'verify_otp':
+            email     = request.form['email'].strip().lower()
+            otp_input = request.form['otp'].strip()
+            user      = User.query.filter_by(email=email).first()
+
+            if not user:
+                return render_template('register.html', step='otp',
+                                      email=email, error='User not found!', success=None)
+
+            if datetime.datetime.utcnow() > user.otp_expiry:
+                return render_template('register.html', step='otp',
+                                      email=email, error='OTP has expired! Please register again.', success=None)
+
+            if user.otp != otp_input:
+                return render_template('register.html', step='otp',
+                                      email=email, error='Wrong OTP! Please try again.', success=None)
+
+            # OTP correct!
+            user.verified   = True
+            user.otp        = None
+            user.otp_expiry = None
+            db.session.commit()
+            login_user(user)
+            return redirect('/')
+
+    return render_template('register.html', step='register', error=None, success=None)
 
 # ── Verify Email ──
 @app.route('/verify/<token>')

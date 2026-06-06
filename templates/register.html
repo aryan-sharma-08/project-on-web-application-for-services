@@ -1,18 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-    <!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZQHZJ3LR1M"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-ZQHZJ3LR1M');
-</script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register — R.K. Studio</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .otp-inputs {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 24px 0;
+        }
+
+        .otp-input {
+            width: 52px !important;
+            height: 60px;
+            text-align: center;
+            font-size: 1.5rem !important;
+            font-weight: 700;
+            border: 2px solid rgba(201,169,110,0.3) !important;
+            border-radius: 10px !important;
+            background: #f9f6f1 !important;
+            color: #1a1a2e !important;
+            transition: all 0.3s ease;
+            padding: 0 !important;
+        }
+
+        .otp-input:focus {
+            border-color: #c9a96e !important;
+            background: white !important;
+            box-shadow: 0 0 0 3px rgba(201,169,110,0.15) !important;
+            outline: none;
+        }
+
+        .otp-email-display {
+            background: rgba(201,169,110,0.08);
+            border: 1px solid rgba(201,169,110,0.2);
+            border-radius: 8px;
+            padding: 12px 16px;
+            text-align: center;
+            color: #8a6a3a;
+            font-size: 0.88rem;
+            margin-bottom: 8px;
+        }
+
+        .resend-link {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .resend-link a {
+            color: #c9a96e;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .otp-timer {
+            text-align: center;
+            color: #888;
+            font-size: 0.82rem;
+            margin-top: 8px;
+        }
+
+        .otp-timer span {
+            color: #c9a96e;
+            font-weight: 600;
+        }
+    </style>
 </head>
 <body>
 
@@ -28,6 +85,10 @@
             <li><a href="/about" data-en="About Us" data-hi="हमारे बारे में">About Us</a></li>
             <li><a href="/contact" data-en="Contact Us" data-hi="संपर्क करें">Contact Us</a></li>
         </ul>
+        <div class="nav-auth">
+            <a href="/login" class="nav-btn-login" data-en="Login" data-hi="लॉगिन">Login</a>
+            <a href="/register" class="nav-btn-register" data-en="Register" data-hi="रजिस्टर">Register</a>
+        </div>
         <div class="lang-toggle">
             <button onclick="setLang('en')" id="btn-en" class="lang-btn active">EN</button>
             <span>|</span>
@@ -36,29 +97,69 @@
     </nav>
 
     <header>
+        {% if step == 'otp' %}
+        <h1 data-en="📧 Verify Your Email" data-hi="📧 अपना ईमेल सत्यापित करें">📧 Verify Your Email</h1>
+        <p data-en="Enter the 6-digit code sent to your email" data-hi="अपने ईमेल पर भेजा गया 6-अंकीय कोड दर्ज करें">Enter the 6-digit code sent to your email</p>
+        {% else %}
         <h1 data-en="✨ Create Account" data-hi="✨ अकाउंट बनाएं">✨ Create Account</h1>
         <p data-en="Join R.K. Studio to book services and place orders" data-hi="सेवाएं बुक करने और ऑर्डर देने के लिए आर.के. स्टूडियो से जुड़ें">Join R.K. Studio to book services and place orders</p>
+        {% endif %}
     </header>
 
     <main>
         <div class="auth-wrapper">
             <div class="auth-card">
 
+                {% if step == 'otp' %}
+                <!-- ── OTP Verification Step ── -->
+                <div class="auth-icon">📧</div>
+                <h2 data-en="Enter OTP" data-hi="OTP दर्ज करें">Enter OTP</h2>
+
+                {% if error %}
+                <div class="error-message">❌ {{ error }}</div>
+                {% endif %}
+
+                <div class="otp-email-display">
+                    📨 Code sent to <strong>{{ email }}</strong>
+                </div>
+
+                <form action="/register" method="POST" id="otpForm">
+                    <input type="hidden" name="action" value="verify_otp">
+                    <input type="hidden" name="email" value="{{ email }}">
+                    <input type="hidden" name="otp" id="otpValue">
+
+                    <div class="otp-inputs">
+                        <input type="text" class="otp-input" maxlength="1" id="otp1" inputmode="numeric">
+                        <input type="text" class="otp-input" maxlength="1" id="otp2" inputmode="numeric">
+                        <input type="text" class="otp-input" maxlength="1" id="otp3" inputmode="numeric">
+                        <input type="text" class="otp-input" maxlength="1" id="otp4" inputmode="numeric">
+                        <input type="text" class="otp-input" maxlength="1" id="otp5" inputmode="numeric">
+                        <input type="text" class="otp-input" maxlength="1" id="otp6" inputmode="numeric">
+                    </div>
+
+                    <div class="otp-timer">
+                        Code expires in <span id="timer">10:00</span>
+                    </div>
+
+                    <button type="submit" class="btn-submit" style="margin-top:20px;" data-en="Verify OTP ✅" data-hi="OTP सत्यापित करें ✅">Verify OTP ✅</button>
+                </form>
+
+                <div class="resend-link">
+                    Didn't receive the code?
+                    <a href="/register" data-en="Register again" data-hi="फिर से रजिस्टर करें">Register again</a>
+                </div>
+
+                {% else %}
+                <!-- ── Registration Step ── -->
                 <div class="auth-icon">✨</div>
                 <h2 data-en="Register" data-hi="रजिस्टर">Register</h2>
 
                 {% if error %}
-<div class="error-message">❌ {{ error }}</div>
-{% endif %}
-
-{% if success %}
-<div class="success-message">
-    ✅ Account created! We sent a verification email to <strong>{{ email }}</strong>.
-    Please check your inbox and click the verification link to activate your account!
-</div>
-{% endif %}
+                <div class="error-message">❌ {{ error }}</div>
+                {% endif %}
 
                 <form action="/register" method="POST">
+                    <input type="hidden" name="action" value="register">
                     <div class="form-group">
                         <label data-en="👤 Full Name" data-hi="👤 पूरा नाम">👤 Full Name</label>
                         <input type="text" name="name" placeholder="Enter your full name" required>
@@ -79,23 +180,93 @@
                         <label data-en="🔒 Confirm Password" data-hi="🔒 पासवर्ड की पुष्टि करें">🔒 Confirm Password</label>
                         <input type="password" name="confirm" placeholder="Re-enter your password" required>
                     </div>
-                    <button type="submit" class="btn-submit" data-en="Create Account ✨" data-hi="अकाउंट बनाएं ✨">Create Account ✨</button>
+                    <button type="submit" class="btn-submit" data-en="Send OTP 📧" data-hi="OTP भेजें 📧">Send OTP 📧</button>
                 </form>
 
                 <p class="auth-switch">
                     <span data-en="Already have an account?" data-hi="पहले से अकाउंट है?">Already have an account?</span>
                     <a href="/login" data-en="Login here" data-hi="यहाँ लॉगिन करें">Login here</a>
                 </p>
+                {% endif %}
 
             </div>
         </div>
     </main>
 
     <footer>
-        <p data-en="© 2000 R.K. Studio. All rights reserved." data-hi="© 2000 आर.के. स्टूडियो। सर्वाधिकार सुरक्षित।">© 2025 R.K. Studio. All rights reserved.</p>
+        <p data-en="© 2025 R.K. Studio. All rights reserved." data-hi="© 2025 आर.के. स्टूडियो। सर्वाधिकार सुरक्षित।">© 2025 R.K. Studio. All rights reserved.</p>
     </footer>
 
     <script>
+        // ── OTP Input Auto-focus ──
+        const otpInputs = document.querySelectorAll('.otp-input');
+
+        otpInputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                const value = e.target.value.replace(/[^0-9]/g, '');
+                e.target.value = value;
+                if (value && index < otpInputs.length - 1) {
+                    otpInputs[index + 1].focus();
+                }
+                updateOTPValue();
+            });
+
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                    otpInputs[index - 1].focus();
+                }
+            });
+
+            input.addEventListener('paste', (e) => {
+                e.preventDefault();
+                const paste = e.clipboardData.getData('text').replace(/[^0-9]/g, '');
+                paste.split('').forEach((char, i) => {
+                    if (otpInputs[index + i]) otpInputs[index + i].value = char;
+                });
+                updateOTPValue();
+                const nextEmpty = [...otpInputs].findIndex(inp => !inp.value);
+                if (nextEmpty !== -1) otpInputs[nextEmpty].focus();
+            });
+        });
+
+        function updateOTPValue() {
+            const otp = [...otpInputs].map(i => i.value).join('');
+            const otpField = document.getElementById('otpValue');
+            if (otpField) otpField.value = otp;
+        }
+
+        // ── OTP Timer ──
+        const timerEl = document.getElementById('timer');
+        if (timerEl) {
+            let seconds = 600;
+            const interval = setInterval(() => {
+                seconds--;
+                const mins = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                timerEl.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+                if (seconds <= 0) {
+                    clearInterval(interval);
+                    timerEl.textContent = 'Expired';
+                    timerEl.style.color = '#e74c3c';
+                }
+            }, 1000);
+        }
+
+        // ── OTP Form Submit ──
+        const otpForm = document.getElementById('otpForm');
+        if (otpForm) {
+            otpForm.addEventListener('submit', (e) => {
+                const otp = [...otpInputs].map(i => i.value).join('');
+                if (otp.length !== 6) {
+                    e.preventDefault();
+                    alert('Please enter all 6 digits!');
+                    return;
+                }
+                document.getElementById('otpValue').value = otp;
+            });
+        }
+
+        // ── Language Toggle ──
         function setLang(lang) {
             localStorage.setItem('rk_lang', lang);
             applyLang(lang);
